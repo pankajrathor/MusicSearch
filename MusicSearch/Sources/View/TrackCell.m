@@ -9,7 +9,7 @@
 #import "TrackCell.h"
 #import "FileDownloader.h"
 
-@interface TrackCell () <FileDownloaderDelegate> {
+@interface TrackCell () {
     BOOL paused;    // track whether the track has been paused
 }
 
