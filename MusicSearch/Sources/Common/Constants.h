@@ -10,19 +10,18 @@
 #define Constants_h
 
 // URL to search for the songs
-static NSString *iTunesUrlString = @"https://itunes.apple.com/search?media=music&entity=song&term=";
+extern NSString *iTunesUrlString;
+// JSON key for Track Name
+extern NSString *kTrackName;
 
 // JSON key for Track Name
-static NSString *kTrackName = @"trackName";
+extern NSString *kArtist;
 
 // JSON key for Track Name
-static NSString *kArtist = @"artistName";
+extern NSString *kPreviewUrl;
 
 // JSON key for Track Name
-static NSString *kPreviewUrl = @"previewUrl";
-
-// JSON key for Track Name
-static NSString *kArtworkUrl = @"artworkUrl60";
+extern NSString *kArtworkUrl;
 
 
 #endif /* Constants_h */
