@@ -22,8 +22,9 @@
 @interface FileDownloader : NSObject
 
 @property (weak, nonatomic) id<FileDownloaderDelegate> delegate;
+@property (copy, nonatomic) NSString *fileURLString;
 
 - (void) downloadFileWithURL:(NSURL *) fileUrl;
-@property(nonatomic,copy) NSString *fileURLString;
+
 
 @end
