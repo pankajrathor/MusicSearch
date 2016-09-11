@@ -12,23 +12,23 @@ Preview songs downloaded once remain within the application directory. The searc
 Developement Enviroment
 =========================
 
-1) IDE - XCode v7.3
-2) iOS SDK - v9.3
-3) Minimum Deployment Target - iOS v8.0 and later.
+1. IDE - XCode v7.3
+2. iOS SDK - v9.3
+3. Minimum Deployment Target - iOS v8.0 and later.
 
 Note: Testing was done on iPhone 6S simulator and iPhone 6S device. iPad orientation is also supported.
 
 Functional Improvement
 =========================
-1) Store recent searches.
-2) Making search as favorite.
-3) Better control over the audio playback.
+1. Store recent searches.
+2. Making search as favorite.
+3. Better control over the audio playback.
 
 Areas of improvement
 =========================
 
-1) UI is very basic. It can be made attractive.
-2) For unit testing, basic test cases have been written for demonstration purpose. Elaborated Unit testing is possible using other unit testing frameworks like OCMockito, Calabash etc.
-3) Error handling can be improved and made more graceful.
-4) Internet connectivity and reachability checking can be added before request the web service.
+1. UI is very basic. It can be made attractive.
+2. For unit testing, basic test cases have been written for demonstration purpose. Elaborated Unit testing is possible using other unit testing frameworks like OCMockito, Calabash etc.
+3. Error handling can be improved and made more graceful.
+4. Internet connectivity and reachability checking can be added before request the web service.
 
