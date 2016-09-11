@@ -12,5 +12,5 @@
 @interface TrackCell : UITableViewCell
 
 - (void) setupTrackCell:(Track *) track;
-- (NSURL *) previewLocalURL;
+
 @end

@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UISearchBar *songSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *songsTableView;
 @property (strong, nonatomic) NSArray *searchedTrackList;
+@property (nonatomic,strong) NSTimer* timer;
+@property (nonatomic) BOOL searchButtonTapped;
 
 @end
 
@@ -24,13 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [SongListActivity sharedInstance].delegate = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 // TODO: REMOVE HARDCODING
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -46,8 +44,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TrackCell *trackCell = (TrackCell *)[tableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
-
-    [trackCell setupTrackCell:[self.searchedTrackList objectAtIndex:indexPath.row]];
+    [trackCell setupTrackCell:self.searchedTrackList[indexPath.row]];
     
     return trackCell;
 }
@@ -56,9 +53,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TrackCell *selectedTrackCell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    NSURL *previewUrl = [selectedTrackCell previewLocalURL];
+    Track *track = self.searchedTrackList[indexPath.row];
+    NSURL *previewUrl = track.previewLocalURL;
     
     if (previewUrl) {
         
@@ -74,17 +70,13 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.songSearchBar resignFirstResponder];
     
-    NSString *searchString = searchBar.text;
-    [SongListActivity sharedInstance].delegate = self;
-    [[SongListActivity sharedInstance] getSongListWithSearchText:searchString];
-    
     [self.songSearchBar setShowsCancelButton:NO];
-    [self.songSearchBar setText:@""];
-    
-    // Start the network activity indicator to visible on the status bar.
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+   // [self.songSearchBar setText:@""];
+    self.searchButtonTapped = YES;
+    [self callSearchWebserivce];
 }
 
+#pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     // When the search bar editing starts, show the cancel button
     [self.songSearchBar setShowsCancelButton:YES];
@@ -92,36 +84,79 @@
     return YES;
 }
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self performSearch];
+    if(searchText.length == 0) {
+        self.searchedTrackList = nil;
+        [self.songsTableView reloadData];
+    }
+}
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
     [self.songSearchBar setShowsCancelButton:NO];
     
-    [self.songSearchBar setText:@""];
+    //[self.songSearchBar setText:@""];
     [self.songSearchBar resignFirstResponder];
+    [[SongListActivity sharedInstance] cancelSearchOperations];
+    
 }
 
-#pragma Mark SongListActivityDelegate 
+#pragma mark - Custom Methods.
+
+- (void)performSearch {
+    
+    if(self.timer.isValid) {
+        [self.timer invalidate];
+    }
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(callSearchWebserivce) userInfo:nil repeats:NO];
+    
+}
+
+- (void)callSearchWebserivce {
+    NSLog(@"Inside %s text = %@",__func__,self.songSearchBar.text);
+    
+    //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
+    //If user has clicked on seach button then we will not check the length of the search string.
+    if(self.songSearchBar.text.length < 2 && !self.searchButtonTapped) {
+        return;
+    }
+    
+    NSString *searchString = self.songSearchBar.text;
+    [[SongListActivity sharedInstance] getSongListWithSearchText:searchString];
+    
+    // Start the network activity indicator to visible on the status bar.
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+}
+
+#pragma mark - SongListActivityDelegate
 
 - (void)didRecieveTracks:(NSArray *)tracks {
+    // Update the searchTrackList with the recieved tracks.
+    self.searchedTrackList = tracks;
     
-    // Dispatch the UI update event on the main thread.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        // Update the searchTrackList with the recieved tracks.
-        self.searchedTrackList = tracks;
-        
-        // Reload the table with the latest track results.
-        [self.songsTableView reloadData];
-        
-        // Stop the network activity indicator to visible on the status bar.
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    });
+    // Reload the table with the latest track results.
+    [self.songsTableView reloadData];
+    
+    // Stop the network activity indicator to visible on the status bar.
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    //Reset the state of this variable
+    self.searchButtonTapped = NO;
 }
 
 - (void)didRecieveError:(NSError *)error {
     NSLog(@"Error getting song list: %@", error.description);
     
-    // TODO: Show alert
+    [self.songsTableView reloadData];
+    
+    // Stop the network activity indicator to visible on the status bar.
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    
+    //Reset the state of this variable
+    self.searchButtonTapped = NO;
+
 }
 
 @end

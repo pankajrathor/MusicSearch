@@ -13,10 +13,10 @@
 @protocol SongListActivityDelegate <NSObject>
 
 // Delegate method to provide the search results.
-- (void) didRecieveTracks:(NSArray *) tracks;
+- (void)didRecieveTracks:(NSArray *) tracks;
 
 // Delegate method in case there is an error retrieving the response.
-- (void) didRecieveError:(NSError *) error;
+- (void)didRecieveError:(NSError *) error;
 
 @end
 
@@ -27,9 +27,12 @@
 @property (weak, nonatomic) id<SongListActivityDelegate> delegate;
 
 // Create a shared instance of the class.
-+(instancetype) sharedInstance;
++ (instancetype)sharedInstance;
 
 // Method to initiate the request for searching songs with the search text.
-- (void) getSongListWithSearchText:(NSString *) searchText;
+- (void)getSongListWithSearchText:(NSString *) searchText;
+
+// Method to Cancel the currently running search operation.
+- (void)cancelSearchOperations;
 
 @end

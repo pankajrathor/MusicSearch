@@ -50,10 +50,18 @@
     self.songList = [[NSMutableArray alloc] init];
 }
 
+- (void)cancelSearchOperations {
+    if(self.songListDataTask.state == NSURLSessionTaskStateRunning) {
+        [self.songListDataTask cancel];
+    }
+}
+
 - (void) getSongListWithSearchText:(NSString *) searchText {
     
     // Check if the search string is nil or empty
     if ((searchText != nil) && (searchText.length > 0)) {
+        
+        [self cancelSearchOperations];
         
         // URL Encoding will be required for the search term
         NSCharacterSet *expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
@@ -82,7 +90,9 @@
                     // Check if the delegate object is valid.
                     if (self.delegate) {
                         if ([self.delegate respondsToSelector:@selector(didRecieveTracks:)])
-                            [self.delegate didRecieveTracks:self.songList];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.delegate didRecieveTracks:self.songList];
+                            });
                     }
                 }
                 else {
@@ -96,7 +106,9 @@
                 
                 if (self.delegate) {
                     if ([self.delegate respondsToSelector:@selector(didRecieveError:)])
-                        [self.delegate didRecieveError:error];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.delegate didRecieveError:error];
+                        });
                 }
             }
             
@@ -130,20 +142,10 @@
         if (songArray != nil && songArray.count != 0) {
             
             // Iterate through the Array to get Song Details dictionary for each result.
-            for (NSDictionary *songDetailsDictionary in songArray) {
-                
-                // Extract the name, artist, previewUrl & artworkUrl from the song details dictionary
-                NSString *name = [songDetailsDictionary valueForKey:kTrackName];
-                NSString *artist = [songDetailsDictionary valueForKey:kArtist];
-                NSString *previewUrl = [songDetailsDictionary valueForKey:kPreviewUrl];
-                NSString *artworkUrl = [songDetailsDictionary valueForKey:kArtworkUrl];
-                
-                // Initialize the Track object with the details
-                Track *track = [[Track alloc] initWithName:name artist:artist previewUrl:previewUrl artworkUrl:artworkUrl];
-                
-                // Add the track object to the song list.
+            [songArray enumerateObjectsUsingBlock:^(NSDictionary *songDetailsDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+                Track *track = [[Track alloc] initWithDictionary:songDetailsDictionary];
                 [self.songList addObject:track];
-            }
+            }];
         }
         else {
             NSLog(@"No matching songs found for the search.");

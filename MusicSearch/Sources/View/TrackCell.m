@@ -8,7 +8,6 @@
 
 #import "TrackCell.h"
 #import "FileDownloader.h"
-#import "Utilities.h"
 
 @interface TrackCell () <FileDownloaderDelegate> {
     BOOL paused;    // track whether the track has been paused
@@ -37,15 +36,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
     
     paused = NO;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void) setupTrackCell:(Track *) track {
@@ -67,14 +59,7 @@
         
     });
     
-    NSURL *localPreviewFile = [Utilities localPathForURL:[NSURL URLWithString:self.trackDetails.previewURL]];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:localPreviewFile.path]) {
-        [self.downloadButton setHidden:YES];
-    }
-    else {
-        [self.downloadButton setHidden:NO];
-    }
+    self.downloadButton.hidden = !self.trackDetails.shouldDownloadFile;
 }
 
 // Handle the Download button clicked event
@@ -91,7 +76,7 @@
     [previewDownloader downloadFileWithURL:[NSURL URLWithString: self.trackDetails.previewURL]];
 }
 
-#pragma Mark File Downloader Delegate
+#pragma mark - FileDownloaderDelegate
 
 - (void)fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
     
@@ -112,16 +97,5 @@
     // TODO: handle download error
 }
 
-- (NSURL *) previewLocalURL{
-    
-    NSURL *localPreviewFile = [Utilities localPathForURL:[NSURL URLWithString:self.trackDetails.previewURL]];
-    
-    NSLog(@"Preview File at: %@", localPreviewFile.absoluteString);
-    if ([[NSFileManager defaultManager] fileExistsAtPath:localPreviewFile.path]) {
-        return localPreviewFile;
-    }
-    
-    return nil;
-}
 
 @end
