@@ -63,7 +63,7 @@
     if (previewUrl) {
         
         AVPlayer *player = [AVPlayer playerWithURL:previewUrl];
-        AVPlayerViewController *playerViewController = [AVPlayerViewController new];
+        AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
         playerViewController.player = player;
         [self presentViewController:playerViewController animated:YES completion:nil];
     }
@@ -80,6 +80,9 @@
     
     [self.songSearchBar setShowsCancelButton:NO];
     [self.songSearchBar setText:@""];
+    
+    // Start the network activity indicator to visible on the status bar.
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -100,9 +103,25 @@
 #pragma Mark SongListActivityDelegate 
 
 - (void)didRecieveTracks:(NSArray *)tracks {
-    self.searchedTrackList = tracks;
     
-    [self.songsTableView reloadData];
+    // Dispatch the UI update event on the main thread.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // Update the searchTrackList with the recieved tracks.
+        self.searchedTrackList = tracks;
+        
+        // Reload the table with the latest track results.
+        [self.songsTableView reloadData];
+        
+        // Stop the network activity indicator to visible on the status bar.
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    });
+}
+
+- (void)didRecieveError:(NSError *)error {
+    NSLog(@"Error getting song list: %@", error.description);
+    
+    // TODO: Show alert
 }
 
 @end
