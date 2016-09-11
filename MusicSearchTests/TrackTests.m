@@ -81,7 +81,7 @@
     Track *track = [[Track alloc] initWithDictionary:@{kPreviewUrl : @"/Users/Dummy/Applications"}];
     
     //Verify
-    XCTAssertNil(track.previewURL);
+    XCTAssertNil(track.previewLocalURL);
 }
 
 

@@ -65,4 +65,36 @@
     XCTAssertTrue([self.sut.artistLabel.text isEqualToString:artist]);
 }
 
+- (void)hideOrShowProgressView {
+    //Execute
+    [self.sut hideOrShowProgressView:YES];
+    
+    //Verify
+    XCTAssertTrue(self.sut.downloadProgressView.hidden);
+}
+
+- (void)testHideOrShowDownloadButton {
+    //Execute
+    [self.sut hideOrShowDownloadButton:YES];
+    
+    //Verify
+    XCTAssertTrue(self.sut.downloadButton.hidden);
+}
+
+- (void)testSetProgressValue {
+    //Execute
+    [self.sut setProgressValue:0.5];
+    
+    //Verify
+    XCTAssertEqual(self.sut.downloadProgressView.progress, 0.5);
+}
+
+- (void)testPreviewURL {
+    Track *track = [[Track alloc] initWithDictionary:@{kPreviewUrl : @"/Users/dummy/Applications"}];
+    [self.sut setupTrackCell:track];
+    
+    //Verify
+    XCTAssertTrue([[self.sut previewURL] isEqualToString:@"/Users/dummy/Applications"]);
+}
+
 @end
