@@ -90,8 +90,6 @@
         previewDownloader.delegate = weakSelf;
         
         [previewDownloader downloadFileWithURL:[NSURL URLWithString: cell.previewURL]];
-        NSLog(@"URL %@",[NSURL URLWithString: cell.previewURL]);
-        NSLog(@"fileURL %@",previewDownloader.fileURLString);
     };
     
     return block;

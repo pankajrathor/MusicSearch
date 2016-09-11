@@ -5,4 +5,13 @@ User can search using Song Name or Artist name from the search bar at the top of
 
 Using the download button on the search results list, a particular preview song can be downloaded. As the download button is tapped, a progress bar appears below the artist label and on completion of the download it disappears. 
 
-Preview songs downloaded once remain within the application directory. The search result will not show the "Download" button if the preview song has already been downloaded. On tapping the cell with downloaded preview, the preview song will be played. Tapping on a cell which does not have preview song downloaded, does not do anything.
+Preview songs downloaded once remain within the application directory. The search result will not show the "Download" button if the preview song has already been downloaded. On tapping the cell with downloaded preview, the preview song will be played. Tapping on a cell which does not have preview song downloaded, does not do anything.      
+
+
+
+# Area Of improvements
+1. Currently the app does not checks for connectivity. While making a API call connectivity should be checked and the error should be handled elegantly.
+2. Currently the app does not handles displaying the error returned from the API call if it fails.
+3. SearchMusicViewController uses AVPlayerViewController. A custom viewcontroller can be created which as an instance of AVPlayer in it. By doing that the app can check if the playback was succesful.
+4. Unit Testing can be improved by using a Mocking Framework.
+5. UI Testing can be used.
