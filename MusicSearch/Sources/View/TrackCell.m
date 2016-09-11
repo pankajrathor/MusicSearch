@@ -47,14 +47,15 @@
     self.songTitleLabel.text = self.trackDetails.name;
     self.artistLabel.text = self.trackDetails.artist;
 
+    __weak TrackCell *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.trackDetails.artworkURL]];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:weakSelf.trackDetails.artworkURL]];
         
         UIImage *artworkImage = [UIImage imageWithData:imageData];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.artworkImageView.image = artworkImage;
+            weakSelf.artworkImageView.image = artworkImage;
         });
         
     });
@@ -63,7 +64,7 @@
 }
 
 // Handle the Download button clicked event
-- (IBAction)downloadClicked:(id)sender {
+- (IBAction) downloadClicked:(id)sender {
     // When the download button is clicked, hide the Download button and show pause button, cancel button and download progress view.
     [self.downloadButton setHidden:YES];
     
@@ -78,22 +79,25 @@
 
 #pragma mark - FileDownloaderDelegate
 
-- (void)fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
+- (void) fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
     
     NSLog(@"File Downloaded at: %@", location.absoluteString);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.downloadProgressView setHidden:YES];
-    });
-}
-
-- (void)fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.downloadProgressView.progress = totalBytesWritten/totalBytesExpectedToWrite;
+    __weak TrackCell *weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf.downloadProgressView setHidden:YES];
     });
 }
 
-- (void)fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
+- (void) fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    
+    __weak TrackCell *weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        weakSelf.downloadProgressView.progress = totalBytesWritten/totalBytesExpectedToWrite;
+    });
+}
+
+- (void) fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
     // TODO: handle download error
 }
 

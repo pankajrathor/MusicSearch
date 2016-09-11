@@ -17,28 +17,28 @@
     // dispatch_once implmentation to ensure only one instance of this class is created.
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedHelper = [[self alloc] init];
+        sharedHelper = [[FileHelper alloc] init];
     });
     
     // return the static instance
     return sharedHelper;
 }
 
-- (NSFileManager*)fileManager {
+- (NSFileManager*) fileManager {
     return [NSFileManager defaultManager];
 }
 
-- (NSString*)documentsDirectoryPath {
+- (NSString*) documentsDirectoryPath {
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 }
 
-- (NSString*)localPathForURL:(NSString *)fileURLString {
+- (NSString*) localPathForURL:(NSString *)fileURLString {
     NSURL *fileURL = [NSURL URLWithString:fileURLString];
     NSString *fileName = fileURL.lastPathComponent;
     return [NSString stringWithFormat:@"%@/%@", self.documentsDirectoryPath, fileName];
 }
 
-- (BOOL)shouldDownloadFileForURL:(NSString *)fileURLString {
+- (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString {
     return ![[NSFileManager defaultManager] fileExistsAtPath:[self localPathForURL:fileURLString]];
 }
 

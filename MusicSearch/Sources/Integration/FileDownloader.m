@@ -22,7 +22,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
 
 @implementation FileDownloader
 
-- (instancetype)init {
+- (instancetype) init {
     self = [super init];
     
     if (self) {
@@ -41,7 +41,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     [self.fileDownloadTask resume];
 }
 
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+- (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     
     NSURL *originalUrl = downloadTask.originalRequest.URL;
     
@@ -79,7 +79,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     }
 }
 
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+- (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     
     // Check if delegate is valid
     if (self.delegate) {
@@ -90,7 +90,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
         
 }
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+- (void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
     // Check if delegate is valid
     if (self.fileDownloadTask) {

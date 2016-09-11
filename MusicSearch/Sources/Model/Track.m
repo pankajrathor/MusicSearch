@@ -12,7 +12,7 @@
 
 @implementation Track
 
-- (instancetype)initWithName:(NSString *)name artist:(NSString *)artist previewUrl:(NSString *)previewUrl artworkUrl:(NSString *)artworkURL {
+- (instancetype) initWithName:(NSString *)name artist:(NSString *)artist previewUrl:(NSString *)previewUrl artworkUrl:(NSString *)artworkURL {
     
     self = [super init];
     if (self) {
@@ -25,7 +25,7 @@
     return self;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
+- (instancetype) initWithDictionary:(NSDictionary *)dictionary {
     
     self = [super init];
     if (self) {
@@ -38,11 +38,11 @@
     return self;
 }
 
-- (BOOL)shouldDownloadFile {
+- (BOOL) shouldDownloadFile {
     return [[FileHelper sharedHelper] shouldDownloadFileForURL:self.previewURL];
 }
 
-- (NSURL *)previewLocalURL {
+- (NSURL *) previewLocalURL {
     
     NSString *previewFileLocalPath = [[FileHelper sharedHelper] localPathForURL:self.previewURL];
     NSLog(@"Preview File at: %@", previewFileLocalPath);
