@@ -29,7 +29,6 @@
     [SongListActivity sharedInstance].delegate = self;
 }
 
-// TODO: REMOVE HARDCODING
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     
     // We just want to have 1 section for the table view
@@ -49,7 +48,7 @@
     return trackCell;
 }
 
-#pragma mark Table View Delegate methods
+#pragma mark - Table View Delegate methods
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -65,7 +64,7 @@
     }
 }
 
-#pragma Mark Search Bar Delegate Methods
+#pragma mark - Search Bar Delegate Methods
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.songSearchBar resignFirstResponder];
@@ -76,7 +75,6 @@
     [self callSearchWebserivce];
 }
 
-#pragma mark - UISearchBarDelegate
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     // When the search bar editing starts, show the cancel button
     [self.songSearchBar setShowsCancelButton:YES];
