@@ -24,23 +24,7 @@
 }
 
 - (void)testExample {
-   // FileDownloader *downloader = [FileDownloader ]
-    /*
-     func testFetchAccountsInformationAPI() {
-     //Set up
-     let apiClient = AccountAPIClient.sharedClient
-     let expectation = self.expectationWithDescription("Testing AccountAPIClient::fetchAccountsInformationAPI")
-     
-     //Execute
-     apiClient.fetchAccountsInformation { (success, error) in
-     expectation.fulfill()
-     
-     //Verify
-     XCTAssert(success, "AccountAPIClient::fetchAccountsInformationAPI failed")
-     }
-     self.waitForExpectationsWithTimeout(3.0, handler: nil)
-     }
-     */
+  
 }
 
 

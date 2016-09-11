@@ -7,33 +7,52 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "SongListActivity.h"
 
-@interface SongListActivityTests : XCTestCase
+@interface SongListActivity ()
 
+@property (strong, nonatomic) NSURLSession *songListSession;
+@property (strong, nonatomic) NSURLSessionDataTask *songListDataTask;
+@property (strong, nonatomic) NSMutableArray *songList;
+
+@end
+
+@interface SongListActivityTests : XCTestCase<SongListActivityDelegate>
+@property(nonatomic,strong)SongListActivity *sut;
+@property(nonatomic,strong)XCTestExpectation *expectation;
 @end
 
 @implementation SongListActivityTests
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.sut = [SongListActivity sharedInstance];
+    self.sut.delegate = self;
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    self.sut = nil;
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testGetSongListWithSearchText {
+    //Setup
+    self.expectation = [self expectationWithDescription:@"testing getSongListWithSearchText method."];
+    
+    //Execute
+    [self.sut getSongListWithSearchText:@"ttt"];
+    [self waitForExpectationsWithTimeout:3.0 handler:nil];
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+
+- (void) didRecieveTracks:(NSArray *) tracks {
+    [self.expectation fulfill];
+    XCTAssertNotNil(tracks);
 }
+
+- (void) didRecieveError:(NSError *) error {
+//NOP.
+}
+
 
 @end
