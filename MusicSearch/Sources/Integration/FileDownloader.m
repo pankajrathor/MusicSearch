@@ -34,7 +34,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
 
 - (void) downloadFileWithURL:(NSURL *) fileUrl {
     // Create a download task for downloading the file
-    
+    self.fileURLString = fileUrl.absoluteString;
     self.fileDownloadTask = [self.downloadSession downloadTaskWithURL:fileUrl];
     
     // now start the downloading
@@ -73,8 +73,12 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
         // Check if delegate is valid
         if (self.delegate) {
             // pass on the download finish event to the delegate
-            if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)])
-                [self.delegate fileDownloader:self didFinishDownloadingToURL:absoluteFileUrl];
+            if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)]) {
+                __weak typeof(self) weakSelf = self;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.delegate fileDownloader:weakSelf didFinishDownloadingToURL:absoluteFileUrl];
+                });
+            }
         }
     }
 }
@@ -84,10 +88,14 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     // Check if delegate is valid
     if (self.delegate) {
         // pass on the download progress event to the delegate
-        if ([self.delegate respondsToSelector:@selector(fileDownloader:totalBytesWritten:totalBytesExpectedToWrite:)])
-            [self.delegate fileDownloader:self totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+        if ([self.delegate respondsToSelector:@selector(fileDownloader:totalBytesWritten:totalBytesExpectedToWrite:)]) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.delegate fileDownloader:weakSelf totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+            });
+        }
     }
-        
+    
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
@@ -95,8 +103,12 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     // Check if delegate is valid
     if (self.fileDownloadTask) {
         // pass on the download error event to the delegate
-        if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)])
-            [self.delegate fileDownloader:self didCompleteWithError:error];
+        if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)]) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.delegate fileDownloader:weakSelf didCompleteWithError:error];
+            });
+        }
     }
 }
 @end

@@ -11,8 +11,9 @@
 #import "SongListActivity.h"
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "FileDownloader.h"
 
-@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SongListActivityDelegate>
+@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SongListActivityDelegate,FileDownloaderDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *songSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *songsTableView;
@@ -45,6 +46,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TrackCell *trackCell = (TrackCell *)[tableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
     [trackCell setupTrackCell:self.searchedTrackList[indexPath.row]];
+    trackCell.downloadButtonTappedBlock = self.trackCellDownloadButtonTappedBlock;
     
     return trackCell;
 }
@@ -57,7 +59,6 @@
     NSURL *previewUrl = track.previewLocalURL;
     
     if (previewUrl) {
-        
         AVPlayer *player = [AVPlayer playerWithURL:previewUrl];
         AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
         playerViewController.player = player;
@@ -75,6 +76,42 @@
     self.searchButtonTapped = YES;
     [self callSearchWebserivce];
 }
+
+- (TrackCellDownloadButtonTappedBlock)trackCellDownloadButtonTappedBlock {
+    __weak typeof(self) weakSelf = self;
+    TrackCellDownloadButtonTappedBlock block = ^(TrackCell *cell) {
+        // When the download button is clicked, hide the Download button and show pause button, cancel button and download progress view.
+        [cell hideOrShowDownloadButton:YES];
+        [cell hideOrShowProgressView:NO];
+        [cell setProgressValue:0.0];
+        
+        FileDownloader *previewDownloader = [[FileDownloader alloc] init];
+        previewDownloader.delegate = weakSelf;
+        
+        [previewDownloader downloadFileWithURL:[NSURL URLWithString: cell.previewURL]];
+        NSLog(@"URL %@",[NSURL URLWithString: cell.previewURL]);
+        NSLog(@"fileURL %@",previewDownloader.fileURLString);
+    };
+    
+    return block;
+}
+
+#pragma mark - FileDownloaderDelegate
+
+- (void)fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
+    TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
+    [trackCell hideOrShowProgressView:YES];
+}
+
+- (void)fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
+    [trackCell setProgressValue:totalBytesWritten/totalBytesExpectedToWrite];
+}
+
+- (void)fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
+    // TODO: handle download error
+}
+
 
 #pragma mark - UISearchBarDelegate
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
@@ -128,6 +165,15 @@
     // Start the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
+}
+
+- (TrackCell*)cellForPreViewURL:(NSString *)urlString {
+    Track *track = (Track *)[self.searchedTrackList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ == previewURL",urlString]].firstObject;
+    NSInteger index = [self.searchedTrackList indexOfObject:track];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    TrackCell* cell = [self.songsTableView cellForRowAtIndexPath:indexPath];
+    
+    return cell;
 }
 
 #pragma mark - SongListActivityDelegate

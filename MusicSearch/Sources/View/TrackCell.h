@@ -9,8 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Track.h"
 
+@class TrackCell;
+
+typedef void (^TrackCellDownloadButtonTappedBlock) (TrackCell *cell);
+
 @interface TrackCell : UITableViewCell
 
+@property(nonatomic,strong) TrackCellDownloadButtonTappedBlock downloadButtonTappedBlock;
+
 - (void) setupTrackCell:(Track *) track;
+- (void)hideOrShowDownloadButton:(BOOL)shouldHide;
+- (void)hideOrShowProgressView:(BOOL)shouldHide;
+- (void)setProgressValue:(float)progressValue;
+- (NSString *)previewURL;
 
 @end
