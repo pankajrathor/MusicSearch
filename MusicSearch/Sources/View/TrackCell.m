@@ -47,14 +47,15 @@
     self.songTitleLabel.text = self.trackDetails.name;
     self.artistLabel.text = self.trackDetails.artist;
 
+    __weak TrackCell *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.trackDetails.artworkURL]];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:weakSelf.trackDetails.artworkURL]];
         
         UIImage *artworkImage = [UIImage imageWithData:imageData];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.artworkImageView.image = artworkImage;
+            weakSelf.artworkImageView.image = artworkImage;
         });
         
     });
@@ -63,6 +64,7 @@
 }
 
 // Handle the Download button clicked event
+
 - (IBAction)downloadClicked:(id)sender {
     if(self.downloadButtonTappedBlock) {
         self.downloadButtonTappedBlock(self);

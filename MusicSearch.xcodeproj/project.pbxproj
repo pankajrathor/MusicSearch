@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B2593941D84A95600768E86 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2593931D84A95600768E86 /* AVKit.framework */; };
 		2B2593971D84ABC600768E86 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B2593961D84ABC600768E86 /* AVFoundation.framework */; };
+		2B2593991D858ED000768E86 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B2593981D858ED000768E86 /* Constants.m */; };
 		A768B9E51D85591000C828A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A768B9C71D85591000C828A9 /* Assets.xcassets */; };
 		A768B9E61D85591000C828A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A768B9C81D85591000C828A9 /* LaunchScreen.storyboard */; };
 		A768B9E71D85591000C828A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A768B9CA1D85591000C828A9 /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		2B2593581D83EC4800768E86 /* MusicSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B2593931D84A95600768E86 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		2B2593961D84ABC600768E86 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2B2593981D858ED000768E86 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		A768B9C71D85591000C828A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A768B9C91D85591000C828A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A768B9CB1D85591000C828A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				A768B9D31D85591000C828A9 /* Constants.h */,
+				2B2593981D858ED000768E86 /* Constants.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				A768B9E91D85591000C828A9 /* AppDelegate.m in Sources */,
 				A768B9EC1D85591000C828A9 /* FileDownloader.m in Sources */,
 				A768B9EB1D85591000C828A9 /* SearchMusicViewController.m in Sources */,
+				2B2593991D858ED000768E86 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

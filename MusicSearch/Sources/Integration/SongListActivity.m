@@ -26,14 +26,14 @@
 
 @implementation SongListActivity
 
-+(instancetype) sharedInstance {
++ (instancetype) sharedInstance {
     // Create a static instance for this class
     static SongListActivity *sharedInstance = nil;
     
     // dispatch_once implmentation to ensure only one instance of this class is created.
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
+        sharedInstance = [[SongListActivity alloc] init];
         // setup the NSURLSession
         [sharedInstance initializeSession];
     });
@@ -50,7 +50,7 @@
     self.songList = [[NSMutableArray alloc] init];
 }
 
-- (void)cancelSearchOperations {
+- (void) cancelSearchOperations {
     if(self.songListDataTask.state == NSURLSessionTaskStateRunning) {
         [self.songListDataTask cancel];
     }
@@ -89,10 +89,13 @@
                     
                     // Check if the delegate object is valid.
                     if (self.delegate) {
-                        if ([self.delegate respondsToSelector:@selector(didRecieveTracks:)])
+                        if ([self.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
+                            
+                            __weak SongListActivity *weakSelf = self;
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [self.delegate didRecieveTracks:self.songList];
+                                [weakSelf.delegate didRecieveTracks:weakSelf.songList];
                             });
+                        }
                     }
                 }
                 else {
@@ -105,10 +108,13 @@
                 NSLog(@"Error retrieving song list: %@", error.localizedDescription);
                 
                 if (self.delegate) {
-                    if ([self.delegate respondsToSelector:@selector(didRecieveError:)])
+                    if ([self.delegate respondsToSelector:@selector(didRecieveError:)]) {
+                        
+                        __weak SongListActivity *weakSelf = self;
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.delegate didRecieveError:error];
+                            [weakSelf.delegate didRecieveError:error];
                         });
+                    }
                 }
             }
             

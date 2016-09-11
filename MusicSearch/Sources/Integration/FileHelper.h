@@ -12,7 +12,7 @@
 
 + (instancetype) sharedHelper;
 
-- (BOOL)shouldDownloadFileForURL:(NSString *)fileURLString;
-- (NSString*)localPathForURL:(NSString *)fileURLString;
+- (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString;
+- (NSString*) localPathForURL:(NSString *)fileURLString;
 
 @end

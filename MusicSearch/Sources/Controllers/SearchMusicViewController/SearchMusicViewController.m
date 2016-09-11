@@ -25,25 +25,24 @@
 
 @implementation SearchMusicViewController
 
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     [SongListActivity sharedInstance].delegate = self;
 }
 
-// TODO: REMOVE HARDCODING
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     
     // We just want to have 1 section for the table view
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     NSInteger rows = [self.searchedTrackList count];
     return rows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TrackCell *trackCell = (TrackCell *)[tableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
     [trackCell setupTrackCell:self.searchedTrackList[indexPath.row]];
     trackCell.downloadButtonTappedBlock = self.trackCellDownloadButtonTappedBlock;
@@ -51,9 +50,9 @@
     return trackCell;
 }
 
-#pragma mark Table View Delegate methods
+#pragma mark - Table View Delegate methods
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Track *track = self.searchedTrackList[indexPath.row];
     NSURL *previewUrl = track.previewLocalURL;
@@ -66,9 +65,9 @@
     }
 }
 
-#pragma Mark Search Bar Delegate Methods
+#pragma mark - Search Bar Delegate Methods
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self.songSearchBar resignFirstResponder];
     
     [self.songSearchBar setShowsCancelButton:NO];
@@ -76,6 +75,7 @@
     self.searchButtonTapped = YES;
     [self callSearchWebserivce];
 }
+
 
 - (TrackCellDownloadButtonTappedBlock)trackCellDownloadButtonTappedBlock {
     __weak typeof(self) weakSelf = self;
@@ -121,7 +121,7 @@
     return YES;
 }
 
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self performSearch];
     if(searchText.length == 0) {
         self.searchedTrackList = nil;
@@ -129,7 +129,7 @@
     }
 }
 
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
     [self.songSearchBar setShowsCancelButton:NO];
     
@@ -141,7 +141,7 @@
 
 #pragma mark - Custom Methods.
 
-- (void)performSearch {
+- (void) performSearch {
     
     if(self.timer.isValid) {
         [self.timer invalidate];
@@ -150,7 +150,7 @@
     
 }
 
-- (void)callSearchWebserivce {
+- (void) callSearchWebserivce {
     NSLog(@"Inside %s text = %@",__func__,self.songSearchBar.text);
     
     //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
@@ -178,7 +178,7 @@
 
 #pragma mark - SongListActivityDelegate
 
-- (void)didRecieveTracks:(NSArray *)tracks {
+- (void) didRecieveTracks:(NSArray *)tracks {
     // Update the searchTrackList with the recieved tracks.
     self.searchedTrackList = tracks;
     
@@ -192,7 +192,7 @@
     self.searchButtonTapped = NO;
 }
 
-- (void)didRecieveError:(NSError *)error {
+- (void) didRecieveError:(NSError *)error {
     NSLog(@"Error getting song list: %@", error.description);
     
     [self.songsTableView reloadData];
