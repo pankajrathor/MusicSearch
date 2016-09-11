@@ -47,7 +47,7 @@
     NSString *previewFileLocalPath = [[FileHelper sharedHelper] localPathForURL:self.previewURL];
     NSLog(@"Preview File at: %@", previewFileLocalPath);
     if ([[NSFileManager defaultManager] fileExistsAtPath:previewFileLocalPath]) {
-        return [NSURL URLWithString:previewFileLocalPath];
+        return [[NSURL alloc]initFileURLWithPath:previewFileLocalPath];
     }
 
     return nil;
