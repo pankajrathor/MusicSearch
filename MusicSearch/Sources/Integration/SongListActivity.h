@@ -3,7 +3,7 @@
 //  This class downloads the list of matching results from the iTunes store. Search URL is https://itunes.apple.com/search?media=music&entity=song&term= 
 //
 //  Created by Pankaj Rathor on 10/09/16.
-//  Copyright © 2016 Pankaj Rathor. All rights reserved.
+//  Copyright © 2016 Sogeti B.V. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

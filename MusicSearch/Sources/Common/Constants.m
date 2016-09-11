@@ -3,7 +3,7 @@
 //  MusicSearch
 //
 //  Created by Pankaj Rathor on 11/09/16.
-//  Copyright © 2016 Pankaj Rathor. All rights reserved.
+//  Copyright © 2016 Sogeti B.V. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
