@@ -9,9 +9,7 @@
 #import "TrackCell.h"
 #import "FileDownloader.h"
 
-@interface TrackCell () {
-    BOOL paused;    // track whether the track has been paused
-}
+@interface TrackCell ()
 
 // IB Outlet for the Song Title Label
 @property (weak, nonatomic) IBOutlet UILabel *songTitleLabel;
@@ -33,12 +31,6 @@
 @end
 
 @implementation TrackCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-    paused = NO;
-}
 
 - (void) setupTrackCell:(Track *) track {
     
@@ -65,25 +57,25 @@
 
 // Handle the Download button clicked event
 
-- (IBAction)downloadClicked:(id)sender {
-    if(self.downloadButtonTappedBlock) {
+- (IBAction) downloadClicked:(id)sender {
+    if (self.downloadButtonTappedBlock) {
         self.downloadButtonTappedBlock(self);
     }
 }
 
-- (void)hideOrShowDownloadButton:(BOOL)shouldHide {
+- (void) hideOrShowDownloadButton:(BOOL)shouldHide {
     self.downloadButton.hidden = shouldHide;
 }
 
-- (void)hideOrShowProgressView:(BOOL)shouldHide {
+- (void) hideOrShowProgressView:(BOOL)shouldHide {
     self.downloadProgressView.hidden = shouldHide;
 }
 
-- (void)setProgressValue:(float)progressValue {
+- (void) setProgressValue:(float)progressValue {
     self.downloadProgressView.progress = progressValue;
 }
 
-- (NSString *)previewURL {
+- (NSString *) previewURL {
     return self.trackDetails.previewURL;
 }
 @end

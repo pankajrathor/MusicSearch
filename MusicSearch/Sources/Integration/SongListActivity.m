@@ -51,7 +51,7 @@
 }
 
 - (void) cancelSearchOperations {
-    if(self.songListDataTask.state == NSURLSessionTaskStateRunning) {
+    if (self.songListDataTask.state == NSURLSessionTaskStateRunning) {
         [self.songListDataTask cancel];
     }
 }
@@ -155,13 +155,11 @@
         }
         else {
             NSLog(@"No matching songs found for the search.");
-            // TODO: Add alert
         }
             
     }
     else {
         NSLog(@"There was error parsing response: %@", jsonParseError.localizedDescription);
-        //TODO: Add alert
     }
 }
 

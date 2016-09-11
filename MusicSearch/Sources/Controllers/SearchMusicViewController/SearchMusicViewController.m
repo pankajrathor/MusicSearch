@@ -78,7 +78,7 @@
 }
 
 
-- (TrackCellDownloadButtonTappedBlock)trackCellDownloadButtonTappedBlock {
+- (TrackCellDownloadButtonTappedBlock) trackCellDownloadButtonTappedBlock {
     __weak typeof(self) weakSelf = self;
     TrackCellDownloadButtonTappedBlock block = ^(TrackCell *cell) {
         // When the download button is clicked, hide the Download button and show pause button, cancel button and download progress view.
@@ -97,12 +97,12 @@
 
 #pragma mark - FileDownloaderDelegate
 
-- (void)fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
+- (void) fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
     [trackCell hideOrShowProgressView:YES];
 }
 
-- (void)fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+- (void) fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
     [trackCell setProgressValue:totalBytesWritten/totalBytesExpectedToWrite];
 }
@@ -113,7 +113,7 @@
 
 
 #pragma mark - UISearchBarDelegate
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+- (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     // When the search bar editing starts, show the cancel button
     [self.songSearchBar setShowsCancelButton:YES];
     
@@ -122,7 +122,7 @@
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self performSearch];
-    if(searchText.length == 0) {
+    if (searchText.length == 0) {
         self.searchedTrackList = nil;
         [self.songsTableView reloadData];
     }
@@ -142,7 +142,7 @@
 
 - (void) performSearch {
     
-    if(self.timer.isValid) {
+    if (self.timer.isValid) {
         [self.timer invalidate];
     }
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(callSearchWebserivce) userInfo:nil repeats:NO];
@@ -154,7 +154,7 @@
     
     //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
     //If user has clicked on seach button then we will not check the length of the search string.
-    if(self.songSearchBar.text.length < 2 && !self.searchButtonTapped) {
+    if (self.songSearchBar.text.length < 2 && !self.searchButtonTapped) {
         return;
     }
     
@@ -166,7 +166,7 @@
     
 }
 
-- (TrackCell*)cellForPreViewURL:(NSString *)urlString {
+- (TrackCell*) cellForPreViewURL:(NSString *)urlString {
     Track *track = (Track *)[self.searchedTrackList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ == previewURL",urlString]].firstObject;
     NSInteger index = [self.searchedTrackList indexOfObject:track];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -201,6 +201,20 @@
     
     //Reset the state of this variable
     self.searchButtonTapped = NO;
+    
+    [self presentAlertForError:error];
+}
+
+// Presents a UIAlertViewController with OK action and error description
+- (void) presentAlertForError:(NSError *) error {
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
+    
+    UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertViewController addAction:okAction];
+    
+    [self presentViewController:alertViewController animated:YES completion:nil];
 
 }
 
