@@ -47,7 +47,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     
     NSString *fileName = originalUrl.lastPathComponent;
     
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     
     NSString *absoluteFilePath = [NSString stringWithFormat:@"%@/%@", documentPath, fileName];
     NSURL *absoluteFileUrl = [NSURL fileURLWithPath:absoluteFilePath];

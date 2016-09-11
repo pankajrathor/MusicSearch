@@ -29,7 +29,7 @@
 }
 
 - (NSString*) documentsDirectoryPath {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
 }
 
 - (NSString*) localPathForURL:(NSString *)fileURLString {

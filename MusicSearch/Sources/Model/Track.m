@@ -29,10 +29,10 @@
     
     self = [super init];
     if (self) {
-        self.name = [dictionary valueForKey:kTrackName];
-        self.artist = [dictionary valueForKey:kArtist];
-        self.previewURL = [dictionary valueForKey:kPreviewUrl];
-        self.artworkURL = [dictionary valueForKey:kArtworkUrl];
+        self.name = dictionary[kTrackName];
+        self.artist = dictionary[kArtist];
+        self.previewURL = dictionary[kPreviewUrl];
+        self.artworkURL = dictionary[kArtworkUrl];
     }
     
     return self;
