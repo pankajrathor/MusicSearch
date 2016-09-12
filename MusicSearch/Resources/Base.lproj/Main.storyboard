@@ -131,8 +131,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="songSearchBar" destination="llE-8u-79F" id="VDK-6e-0MN"/>
-                        <outlet property="songsTableView" destination="sEq-4I-jzJ" id="lld-UX-WCF"/>
+                        <outlet property="trackSearchBar" destination="llE-8u-79F" id="jj1-rD-Mkq"/>
+                        <outlet property="tracksTableView" destination="sEq-4I-jzJ" id="ENz-ET-QHO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

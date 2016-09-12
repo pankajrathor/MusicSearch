@@ -22,7 +22,7 @@
 
 @interface SearchMusicViewController()
 
-    @property (nonatomic) UITableView *songsTableView;
+    @property (nonatomic) UITableView *tracksTableView;
 
 @end
 
@@ -38,7 +38,7 @@
     
     SearchMusicViewController *searchMusicViewController = (SearchMusicViewController *)[storyBoard instantiateViewControllerWithIdentifier:NSStringFromClass([SearchMusicViewController class])];
     [searchMusicViewController view];//Load View
-    self.sut = (TrackCell *)[searchMusicViewController.songsTableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
+    self.sut = (TrackCell *)[searchMusicViewController.tracksTableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
 }
 
 - (void) tearDown {
