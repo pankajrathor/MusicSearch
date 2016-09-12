@@ -24,10 +24,12 @@
     return sharedHelper;
 }
 
+// Returns the default file manager instance.
 - (NSFileManager*) fileManager {
     return [NSFileManager defaultManager];
 }
 
+// Gets the doucment directory path
 - (NSString*) documentsDirectoryPath {
     return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
 }
@@ -35,6 +37,7 @@
 - (NSString*) localPathForURL:(NSString *)fileURLString {
     NSURL *fileURL = [NSURL URLWithString:fileURLString];
     NSString *fileName = fileURL.lastPathComponent;
+    // Append the remote file name with documents directory to get the local file path
     return [NSString stringWithFormat:@"%@/%@", self.documentsDirectoryPath, fileName];
 }
 

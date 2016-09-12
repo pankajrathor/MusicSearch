@@ -51,6 +51,7 @@
 }
 
 - (void) cancelSearchOperations {
+    // Cancel the current running data task.
     if (self.songListDataTask.state == NSURLSessionTaskStateRunning) {
         [self.songListDataTask cancel];
     }
