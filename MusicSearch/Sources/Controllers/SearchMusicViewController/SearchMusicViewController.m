@@ -177,7 +177,7 @@
     }
     
     NSString *searchString = self.trackSearchBar.text;
-    [[TrackListActivity sharedInstance] getSongListWithSearchText:searchString];
+    [[TrackListActivity sharedInstance] getTrackListWithSearchText:searchString];
     
     // Start the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

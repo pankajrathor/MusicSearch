@@ -30,7 +30,7 @@
 - (void) testDownloadURL {
     //Setup
     NSString *url = @"http://a856.phobos.apple.com/us/r30/Music6/v4/95/30/d4/9530d4c0-d0f9-4c48-3780-87c4d50616f9/mzaf_1979732190213671487.plus.aac.p.m4a";
-    self.expectation = [self expectationWithDescription:@"testing getSongListWithSearchText method."];
+    self.expectation = [self expectationWithDescription:@"testing getTrackListWithSearchText method."];
     
     //Execeute
     [self.sut downloadFileWithURL:[NSURL URLWithString:url]];

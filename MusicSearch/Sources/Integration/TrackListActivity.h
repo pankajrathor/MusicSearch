@@ -30,7 +30,7 @@
 + (instancetype) sharedInstance;
 
 // Method to initiate the request for searching songs with the search text.
-- (void) getSongListWithSearchText:(NSString *) searchText;
+- (void) getTrackListWithSearchText:(NSString *) searchText;
 
 // Method to Cancel the currently running search operation.
 - (void) cancelSearchOperations;

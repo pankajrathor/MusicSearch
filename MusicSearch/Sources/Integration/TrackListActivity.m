@@ -57,7 +57,7 @@
     }
 }
 
-- (void) getSongListWithSearchText:(NSString *) searchText {
+- (void) getTrackListWithSearchText:(NSString *) searchText {
     
     // Check if the search string is nil or empty
     if ((searchText != nil) && (searchText.length > 0)) {

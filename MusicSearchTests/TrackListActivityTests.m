@@ -35,12 +35,12 @@
     self.sut = nil;
 }
 
-- (void)testGetSongListWithSearchText {
+- (void)testGetTrackListWithSearchText {
     //Setup
-    self.expectation = [self expectationWithDescription:@"testing getSongListWithSearchText method."];
+    self.expectation = [self expectationWithDescription:@"testing getTrackListWithSearchText method."];
     
     //Execute
-    [self.sut getSongListWithSearchText:@"ttt"];
+    [self.sut getTrackListWithSearchText:@"ttt"];
     [self waitForExpectationsWithTimeout:3.0 handler:nil];
 }
 
