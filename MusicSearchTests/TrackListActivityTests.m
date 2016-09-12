@@ -1,5 +1,5 @@
 //
-//  TrackListActivityTests.m
+//  TrackListApiClientTests.m
 //  MusicSearch
 //
 //  Created by Pankaj Rathor on 9/11/16.
@@ -7,9 +7,9 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "TrackListActivity.h"
+#import "TrackListApiClient.h"
 
-@interface TrackListActivity ()
+@interface TrackListApiClient ()
 
 @property (strong, nonatomic) NSURLSession *songListSession;
 @property (strong, nonatomic) NSURLSessionDataTask *songListDataTask;
@@ -17,16 +17,16 @@
 
 @end
 
-@interface TrackListActivityTests : XCTestCase<TrackListActivityDelegate>
-@property(nonatomic,strong)TrackListActivity *sut;
+@interface TrackListApiClientTests : XCTestCase<TrackListApiClientDelegate>
+@property(nonatomic,strong)TrackListApiClient *sut;
 @property(nonatomic,strong)XCTestExpectation *expectation;
 @end
 
-@implementation TrackListActivityTests
+@implementation TrackListApiClientTests
 
 - (void) setUp {
     [super setUp];
-    self.sut = [TrackListActivity sharedInstance];
+    self.sut = [TrackListApiClient sharedInstance];
     self.sut.delegate = self;
 }
 

@@ -11,11 +11,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SearchMusicViewController.h"
 #import "TrackCell.h"
-#import "TrackListActivity.h"
+#import "TrackListApiClient.h"
 #import "FileDownloader.h"
 #import "TrackManager.h"
 
-@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, TrackListActivityDelegate,FileDownloaderDelegate>
+@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, TrackListApiClientDelegate,FileDownloaderDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *trackSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tracksTableView;
@@ -34,8 +34,8 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    [TrackListActivity sharedInstance].delegate = self;
-    self.trackManager = [TrackManager sharedInstance];
+    [TrackListApiClient sharedInstance].delegate = self;
+    self.trackManager = [TrackManager sharedManager];
 }
 
 #pragma mark - Table View Data source methods
@@ -47,7 +47,7 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSInteger rows = [[TrackManager sharedInstance] trackCount];
+    NSInteger rows = [[TrackManager sharedManager] trackCount];
     return rows;
 }
 
@@ -151,7 +151,7 @@
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
     [self.trackSearchBar setShowsCancelButton:NO];
     [self.trackSearchBar resignFirstResponder];
-    [[TrackListActivity sharedInstance] cancelSearchOperations];
+    [[TrackListApiClient sharedInstance] cancelSearchOperations];
     
 }
 
@@ -177,7 +177,7 @@
     }
     
     NSString *searchString = self.trackSearchBar.text;
-    [[TrackListActivity sharedInstance] getTrackListWithSearchText:searchString];
+    [[TrackListApiClient sharedInstance] getTrackListWithSearchText:searchString];
     
     // Start the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -196,7 +196,7 @@
     return cell;
 }
 
-#pragma mark - TrackListActivityDelegate
+#pragma mark - TrackListApiClientDelegate methods
 
 // Delegate method for getting the track list
 - (void) didRecieveTracks:(NSArray *)tracks {

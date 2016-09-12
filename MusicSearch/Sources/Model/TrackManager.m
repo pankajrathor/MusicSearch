@@ -17,7 +17,7 @@
 
 @implementation TrackManager
 
-+ (instancetype) sharedInstance {
++ (instancetype) sharedManager {
     // Create a static instance for this class
     static TrackManager *sharedInstance = nil;
     

@@ -18,7 +18,7 @@
 		A768B9EA1D85591000C828A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9D11D85591000C828A9 /* main.m */; };
 		A768B9EB1D85591000C828A9 /* SearchMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9D71D85591000C828A9 /* SearchMusicViewController.m */; };
 		A768B9EC1D85591000C828A9 /* FileDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9DA1D85591000C828A9 /* FileDownloader.m */; };
-		A768B9ED1D85591000C828A9 /* TrackListActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9DC1D85591000C828A9 /* TrackListActivity.m */; };
+		A768B9ED1D85591000C828A9 /* TrackListApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9DC1D85591000C828A9 /* TrackListApiClient.m */; };
 		A768B9EE1D85591000C828A9 /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9DE1D85591000C828A9 /* FileHelper.m */; };
 		A768B9EF1D85591000C828A9 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9E11D85591000C828A9 /* Track.m */; };
 		A768B9F01D85591000C828A9 /* TrackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A768B9E41D85591000C828A9 /* TrackCell.m */; };
@@ -57,8 +57,8 @@
 		A768B9D71D85591000C828A9 /* SearchMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMusicViewController.m; sourceTree = "<group>"; };
 		A768B9D91D85591000C828A9 /* FileDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDownloader.h; sourceTree = "<group>"; };
 		A768B9DA1D85591000C828A9 /* FileDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDownloader.m; sourceTree = "<group>"; };
-		A768B9DB1D85591000C828A9 /* TrackListActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackListActivity.h; sourceTree = "<group>"; };
-		A768B9DC1D85591000C828A9 /* TrackListActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackListActivity.m; sourceTree = "<group>"; };
+		A768B9DB1D85591000C828A9 /* TrackListApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackListApiClient.h; sourceTree = "<group>"; };
+		A768B9DC1D85591000C828A9 /* TrackListApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackListApiClient.m; sourceTree = "<group>"; };
 		A768B9DD1D85591000C828A9 /* FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHelper.h; sourceTree = "<group>"; };
 		A768B9DE1D85591000C828A9 /* FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelper.m; sourceTree = "<group>"; };
 		A768B9E01D85591000C828A9 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
@@ -195,8 +195,8 @@
 			children = (
 				A768B9D91D85591000C828A9 /* FileDownloader.h */,
 				A768B9DA1D85591000C828A9 /* FileDownloader.m */,
-				A768B9DB1D85591000C828A9 /* TrackListActivity.h */,
-				A768B9DC1D85591000C828A9 /* TrackListActivity.m */,
+				A768B9DB1D85591000C828A9 /* TrackListApiClient.h */,
+				A768B9DC1D85591000C828A9 /* TrackListApiClient.m */,
 				A768B9DD1D85591000C828A9 /* FileHelper.h */,
 				A768B9DE1D85591000C828A9 /* FileHelper.m */,
 			);
@@ -340,7 +340,7 @@
 				A768B9EE1D85591000C828A9 /* FileHelper.m in Sources */,
 				A768B9EA1D85591000C828A9 /* main.m in Sources */,
 				A768B9F01D85591000C828A9 /* TrackCell.m in Sources */,
-				A768B9ED1D85591000C828A9 /* TrackListActivity.m in Sources */,
+				A768B9ED1D85591000C828A9 /* TrackListApiClient.m in Sources */,
 				A768B9E91D85591000C828A9 /* AppDelegate.m in Sources */,
 				A768B9EC1D85591000C828A9 /* FileDownloader.m in Sources */,
 				2B25939C1D86AB9E00768E86 /* TrackManager.m in Sources */,

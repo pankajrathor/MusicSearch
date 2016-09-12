@@ -12,7 +12,7 @@
 @interface TrackManager : NSObject
 
 // Shared instance of the class.
-+ (instancetype) sharedInstance;
++ (instancetype) sharedManager;
 
 // Add the list of tracks to the track manager
 - (void) addTrackList:(NSArray *) trackList;

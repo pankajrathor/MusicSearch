@@ -58,21 +58,21 @@
 
 // Handle the Download button clicked event
 
-- (IBAction) downloadClicked:(id)sender {
+- (IBAction) downloadClicked:(id) sender {
     if (self.downloadButtonTappedBlock) {
         self.downloadButtonTappedBlock(self);
     }
 }
 
-- (void) hideDownloadButton:(BOOL)shouldHide {
+- (void) hideDownloadButton:(BOOL) shouldHide {
     self.downloadButton.hidden = shouldHide;
 }
 
-- (void) hideProgressView:(BOOL)shouldHide {
+- (void) hideProgressView:(BOOL) shouldHide {
     self.downloadProgressView.hidden = shouldHide;
 }
 
-- (void) setProgressValue:(float)progressValue {
+- (void) setProgressValue:(float) progressValue {
     self.downloadProgressView.progress = progressValue;
 }
 
