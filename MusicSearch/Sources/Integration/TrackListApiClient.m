@@ -92,8 +92,6 @@
                     // Check if the delegate object is valid.
                     if (weakSelf.delegate) {
                         if ([weakSelf.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
-                            
-                            
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [weakSelf.delegate didRecieveTracks:weakSelf.songList];
                             });

@@ -31,4 +31,3 @@ Areas of improvement
 4. Unit Testing can be improved by using a Mocking Framework.
 5. UI Testing can be used.
 6. On iOS simulator, there is a memory leak due to AVPlayer. However, this leak is not present on device. This seems to be an issue with framework for simulator. Here is the link: http://crosbymichael.com/avaudioplayer-memory-leak.html
-7. There is room for improvement in the app design too. Example: TrackListActivity can be moved inside TrackManager instead of SearchMusicViewController.
