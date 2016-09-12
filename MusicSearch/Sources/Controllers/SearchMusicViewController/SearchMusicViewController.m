@@ -139,7 +139,7 @@
     [self performSearch];
     if (searchText.length == 0) {
 
-        [self.trackManager removeTrackList];
+        [self.trackManager clearTrackList];
         
         [self.tracksTableView reloadData];
     }
