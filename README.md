@@ -27,8 +27,8 @@ Functional Improvement
 Areas of improvement
 =========================
 
-1. UI is very basic. It can be made attractive.
-2. For unit testing, basic test cases have been written for demonstration purpose. Elaborated Unit testing is possible using other unit testing frameworks like OCMockito, Calabash etc.
-3. Error handling can be improved and made more graceful.
-4. Internet connectivity and reachability checking can be added before request the web service.
-
+1. Currently the app does not checks for connectivity. While making a API call connectivity should be checked and the error should be handled elegantly.
+2. Currently the app does not handles displaying the error returned from the API call if it fails.
+3. SearchMusicViewController uses AVPlayerViewController. A custom viewcontroller can be created which as an instance of AVPlayer in it. By doing that the app can check if the playback was succesful.
+4. Unit Testing can be improved by using a Mocking Framework.
+5. UI Testing can be used.

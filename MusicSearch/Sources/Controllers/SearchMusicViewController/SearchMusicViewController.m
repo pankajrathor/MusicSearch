@@ -123,7 +123,12 @@
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self performSearch];
     if (searchText.length == 0) {
+        
+        [self.searchedTrackList enumerateObjectsUsingBlock:^(Track *track, NSUInteger idx, BOOL * stop) {
+            [track deletePreviewFile];
+        }];
         self.searchedTrackList = nil;
+        
         [self.songsTableView reloadData];
     }
 }

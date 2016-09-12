@@ -91,7 +91,7 @@
                     if (self.delegate) {
                         if ([self.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
                             
-                            __weak SongListActivity *weakSelf = self;
+                            __weak typeof(self) weakSelf = self;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [weakSelf.delegate didRecieveTracks:weakSelf.songList];
                             });
@@ -110,7 +110,7 @@
                 if (self.delegate) {
                     if ([self.delegate respondsToSelector:@selector(didRecieveError:)]) {
                         
-                        __weak SongListActivity *weakSelf = self;
+                        __weak typeof(self) weakSelf = self;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [weakSelf.delegate didRecieveError:error];
                         });

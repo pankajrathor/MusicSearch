@@ -14,5 +14,6 @@
 
 - (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString;
 - (NSString*) localPathForURL:(NSString *)fileURLString;
+- (BOOL) removeItemAtPath:(NSString *)path;
 
 @end

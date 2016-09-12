@@ -38,6 +38,12 @@
     return [NSString stringWithFormat:@"%@/%@", self.documentsDirectoryPath, fileName];
 }
 
+- (BOOL) removeItemAtPath:(NSString *)path {
+    NSError *error = nil;
+    BOOL success = [self.fileManager removeItemAtPath:path error:&error];
+    return (success && !error);
+}
+
 - (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString {
     return ![[NSFileManager defaultManager] fileExistsAtPath:[self localPathForURL:fileURLString]];
 }

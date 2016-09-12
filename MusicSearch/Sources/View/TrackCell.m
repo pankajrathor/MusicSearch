@@ -8,7 +8,7 @@
 
 #import "TrackCell.h"
 #import "FileDownloader.h"
-
+#import "FileHelper.h"
 @interface TrackCell ()
 
 // IB Outlet for the Song Title Label
@@ -39,7 +39,7 @@
     self.songTitleLabel.text = self.trackDetails.name;
     self.artistLabel.text = self.trackDetails.artist;
 
-    __weak TrackCell *weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:weakSelf.trackDetails.artworkURL]];
@@ -78,4 +78,5 @@
 - (NSString *) previewURL {
     return self.trackDetails.previewURL;
 }
+
 @end

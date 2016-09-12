@@ -43,14 +43,19 @@
 }
 
 - (NSURL *) previewLocalURL {
-    
     NSString *previewFileLocalPath = [[FileHelper sharedHelper] localPathForURL:self.previewURL];
-    NSLog(@"Preview File at: %@", previewFileLocalPath);
     if ([[NSFileManager defaultManager] fileExistsAtPath:previewFileLocalPath]) {
         return [[NSURL alloc]initFileURLWithPath:previewFileLocalPath];
     }
 
     return nil;
+}
+
+- (BOOL) deletePreviewFile {
+    if(!self.previewLocalURL) {//There is no need to delete the file. As the file does not exists.
+        return YES;
+    }
+    return [[FileHelper sharedHelper] removeItemAtPath:[[FileHelper sharedHelper] localPathForURL:self.previewURL]];
 }
 
 @end
