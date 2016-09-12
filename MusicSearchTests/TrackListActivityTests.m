@@ -24,13 +24,13 @@
 
 @implementation TrackListActivityTests
 
-- (void)setUp {
+- (void) setUp {
     [super setUp];
     self.sut = [TrackListActivity sharedInstance];
     self.sut.delegate = self;
 }
 
-- (void)tearDown {
+- (void) tearDown {
     [super tearDown];
     self.sut = nil;
 }

@@ -16,11 +16,11 @@
 
 @implementation TrackTests
 
-- (void)setUp {
+- (void) setUp {
     [super setUp];
 }
 
-- (void)tearDown {
+- (void) tearDown {
     [super tearDown];
 }
 
@@ -28,7 +28,7 @@
  * We are passing a dictionary with all the fields filled.
  * Expected result is that all the fields should have valid data.
  */
-- (void)testAccountInstantiationAndParsing {
+- (void) testAccountInstantiationAndParsing {
     //Setup
     NSString *trackName = @"dummyName";
     NSString *artist = @"dummyArtist";
@@ -56,7 +56,7 @@
  * We are not passing TrackName and Artist in the dictionary.
  * Expected result is that these two fields should be initialised to nil. Rest of the fields should have valid data
  */
-- (void)testParsingWithPartialDataParsing {
+- (void) testParsingWithPartialDataParsing {
     //Setup
     NSString *previewURL = @"dummyURL";
     NSString *artWorkURL = @"dummyArtworkName";
@@ -76,7 +76,7 @@
     XCTAssertTrue([track.artworkURL isEqualToString:artWorkURL]);
 }
 
-- (void)testPreviewLocalURL {
+- (void) testPreviewLocalURL {
     //Setup
     Track *track = [[Track alloc] initWithDictionary:@{kPreviewUrl : @"/Users/Dummy/Applications"}];
     

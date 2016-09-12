@@ -22,7 +22,7 @@
 
 @interface SearchMusicViewController()
 
-    @property(nonatomic)UITableView *songsTableView;
+    @property (nonatomic) UITableView *songsTableView;
 
 @end
 
@@ -32,7 +32,7 @@
 
 @implementation TrackCellTests
 
-- (void)setUp {
+- (void) setUp {
     [super setUp];
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
@@ -41,12 +41,12 @@
     self.sut = (TrackCell *)[searchMusicViewController.songsTableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
 }
 
-- (void)tearDown {
+- (void) tearDown {
     [super tearDown];
     self.sut = nil;
 }
 
-- (void)testUIInitialisation {
+- (void) testUIInitialisation {
     //Setup
     NSString *trackName = @"dummyName";
     NSString *artist = @"dummyArtist";
@@ -65,7 +65,7 @@
     XCTAssertTrue([self.sut.artistLabel.text isEqualToString:artist]);
 }
 
-- (void)hideOrShowProgressView {
+- (void) hideOrShowProgressView {
     //Execute
     [self.sut hideOrShowProgressView:YES];
     
@@ -73,7 +73,7 @@
     XCTAssertTrue(self.sut.downloadProgressView.hidden);
 }
 
-- (void)testHideOrShowDownloadButton {
+- (void) testHideOrShowDownloadButton {
     //Execute
     [self.sut hideOrShowDownloadButton:YES];
     
@@ -81,7 +81,7 @@
     XCTAssertTrue(self.sut.downloadButton.hidden);
 }
 
-- (void)testSetProgressValue {
+- (void) testSetProgressValue {
     //Execute
     [self.sut setProgressValue:0.5];
     
@@ -89,7 +89,7 @@
     XCTAssertEqual(self.sut.downloadProgressView.progress, 0.5);
 }
 
-- (void)testPreviewURL {
+- (void) testPreviewURL {
     Track *track = [[Track alloc] initWithDictionary:@{kPreviewUrl : @"/Users/dummy/Applications"}];
     [self.sut setupTrackCell:track];
     
