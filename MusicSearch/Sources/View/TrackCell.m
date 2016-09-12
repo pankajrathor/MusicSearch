@@ -11,7 +11,7 @@
 #import "FileHelper.h"
 @interface TrackCell ()
 
-// IB Outlet for the Song Title Label
+// IB Outlet for the Track Title Label
 @property (weak, nonatomic) IBOutlet UILabel *trackTitleLabel;
 
 // IB Outlet for the Artist Label

@@ -213,7 +213,7 @@
 
 // Delegate method for error while getting the track list
 - (void) didRecieveError:(NSError *)error {
-    NSLog(@"Error getting song list: %@", error.description);
+    NSLog(@"Error getting track list: %@", error.description);
     
     [self.tracksTableView reloadData];
     

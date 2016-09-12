@@ -29,7 +29,7 @@
 // Create a shared instance of the class.
 + (instancetype) sharedInstance;
 
-// Method to initiate the request for searching songs with the search text.
+// Method to initiate the request for searching tracks with the search text.
 - (void) getTrackListWithSearchText:(NSString *) searchText;
 
 // Method to Cancel the currently running search operation.

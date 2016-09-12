@@ -19,7 +19,7 @@
 // Property to hold the NSURLSessionDataTask to fetch the search results
 @property (strong, nonatomic) NSURLSessionDataTask *trackListDataTask;
 
-// Property to hold the list of songs.
+// Property to hold the list of tracks.
 @property (strong, nonatomic) NSMutableArray *trackList;
 
 @end
@@ -151,19 +151,19 @@
     // Check for any JSON parsing error.
     if (jsonParseError == nil) {
         
-        // Get the array of searched songs
+        // Get the array of searched tracks
         NSArray *trackArray = [responseDictionary objectForKey:@"results"];
         
         if (trackArray != nil && trackArray.count != 0) {
             
-            // Iterate through the Array to get Song Details dictionary for each result.
+            // Iterate through the Array to get track Details dictionary for each result.
             [trackArray enumerateObjectsUsingBlock:^(NSDictionary *trackDetailsDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
                 Track *track = [[Track alloc] initWithDictionary:trackDetailsDictionary];
                 [self.trackList addObject:track];
             }];
         }
         else {
-            NSLog(@"No matching songs found for the search.");
+            NSLog(@"No matching track found for the search.");
         }
             
     }
