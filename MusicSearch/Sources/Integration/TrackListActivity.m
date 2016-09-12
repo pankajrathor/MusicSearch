@@ -107,13 +107,20 @@
             }
             else {
                 NSLog(@"Error retrieving song list: %@", error.localizedDescription);
-            
-                if (weakSelf.delegate) {
-                    if ([weakSelf.delegate respondsToSelector:@selector(didRecieveError:)]) {
-                        
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [weakSelf.delegate didRecieveError:error];
-                        });
+                
+                // If the search was cancelled, do not throw the error to the delegate.
+                if (error.code == NSURLErrorCancelled) {
+                    NSLog(@"Cancelled error");
+                }
+                else {
+                    // Pass on the error information to the delegate
+                    if (weakSelf.delegate) {
+                        if ([weakSelf.delegate respondsToSelector:@selector(didRecieveError:)]) {
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [weakSelf.delegate didRecieveError:error];
+                            });
+                        }
                     }
                 }
             }

@@ -73,7 +73,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
         // Check if delegate is valid
         if (self.delegate) {
             // pass on the download finish event to the delegate
-            if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)]) {
+            if ([self.delegate respondsToSelector:@selector(fileDownloader:didFinishDownloadingToURL:)]) {
                 __weak typeof(self) weakSelf = self;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.delegate fileDownloader:weakSelf didFinishDownloadingToURL:absoluteFileUrl];
@@ -100,14 +100,16 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
 
 - (void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
-    // Check if delegate is valid
-    if (self.fileDownloadTask) {
-        // pass on the download error event to the delegate
-        if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)]) {
-            __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.delegate fileDownloader:weakSelf didCompleteWithError:error];
-            });
+    if (error) {
+        // Check if delegate is valid
+        if (self.fileDownloadTask) {
+            // pass on the download error event to the delegate
+            if ([self.delegate respondsToSelector:@selector(fileDownloader:didCompleteWithError:)]) {
+                __weak typeof(self) weakSelf = self;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.delegate fileDownloader:weakSelf didCompleteWithError:error];
+                });
+            }
         }
     }
 }

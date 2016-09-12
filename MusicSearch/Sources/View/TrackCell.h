@@ -18,8 +18,8 @@ typedef void (^TrackCellDownloadButtonTappedBlock) (TrackCell *cell);
 @property(nonatomic,strong) TrackCellDownloadButtonTappedBlock downloadButtonTappedBlock;
 
 - (void) setupTrackCell:(Track *) track;
-- (void) hideOrShowDownloadButton:(BOOL)shouldHide;
-- (void) hideOrShowProgressView:(BOOL)shouldHide;
+- (void) hideDownloadButton:(BOOL)shouldHide;
+- (void) hideProgressView:(BOOL)shouldHide;
 - (void) setProgressValue:(float)progressValue;
 - (NSString *) previewURL;
 

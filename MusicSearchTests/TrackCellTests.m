@@ -67,7 +67,7 @@
 
 - (void) hideOrShowProgressView {
     //Execute
-    [self.sut hideOrShowProgressView:YES];
+    [self.sut hideProgressView:YES];
     
     //Verify
     XCTAssertTrue(self.sut.downloadProgressView.hidden);
@@ -75,7 +75,7 @@
 
 - (void) testHideOrShowDownloadButton {
     //Execute
-    [self.sut hideOrShowDownloadButton:YES];
+    [self.sut hideDownloadButton:YES];
     
     //Verify
     XCTAssertTrue(self.sut.downloadButton.hidden);

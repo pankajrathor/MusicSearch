@@ -63,11 +63,11 @@
     }
 }
 
-- (void) hideOrShowDownloadButton:(BOOL)shouldHide {
+- (void) hideDownloadButton:(BOOL)shouldHide {
     self.downloadButton.hidden = shouldHide;
 }
 
-- (void) hideOrShowProgressView:(BOOL)shouldHide {
+- (void) hideProgressView:(BOOL)shouldHide {
     self.downloadProgressView.hidden = shouldHide;
 }
 

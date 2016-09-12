@@ -7,19 +7,25 @@
 //  Copyright © 2016 Sogeti B.V. All rights reserved.
 //
 
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "SearchMusicViewController.h"
 #import "TrackCell.h"
 #import "TrackListActivity.h"
-#import <AVKit/AVKit.h>
-#import <AVFoundation/AVFoundation.h>
 #import "FileDownloader.h"
+#import "TrackManager.h"
 
 @interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, TrackListActivityDelegate,FileDownloaderDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *trackSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *tracksTableView;
-@property (strong, nonatomic) NSArray *searchedTrackList;
-@property (nonatomic,strong) NSTimer* timer;
+
+// Track Manager instance to manage the tracks
+@property (strong, nonatomic) TrackManager *trackManager;
+
+// Timer for tracking the typing speed.
+@property (nonatomic,strong) NSTimer* typeTime;
+
 @property (nonatomic) BOOL searchButtonTapped;
 
 @end
@@ -29,8 +35,10 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     [TrackListActivity sharedInstance].delegate = self;
+    self.trackManager = [TrackManager sharedInstance];
 }
 
+#pragma mark - Table View Data source methods
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     
     // We just want to have 1 section for the table view
@@ -39,13 +47,13 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    NSInteger rows = [self.searchedTrackList count];
+    NSInteger rows = [[TrackManager sharedInstance] trackCount];
     return rows;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TrackCell *trackCell = (TrackCell *)[tableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
-    [trackCell setupTrackCell:self.searchedTrackList[indexPath.row]];
+    [trackCell setupTrackCell:[self.trackManager trackAtIndex:indexPath.row]];
     trackCell.downloadButtonTappedBlock = self.trackCellDownloadButtonTappedBlock;
     
     return trackCell;
@@ -55,7 +63,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Track *track = self.searchedTrackList[indexPath.row];
+    Track *track =  [self.trackManager trackAtIndex:indexPath.row];
     NSURL *previewUrl = track.previewLocalURL;
     
     if (previewUrl) {
@@ -81,8 +89,8 @@
     __weak typeof(self) weakSelf = self;
     TrackCellDownloadButtonTappedBlock block = ^(TrackCell *cell) {
         // When the download button is clicked, hide the Download button and show pause button, cancel button and download progress view.
-        [cell hideOrShowDownloadButton:YES];
-        [cell hideOrShowProgressView:NO];
+        [cell hideDownloadButton:YES];
+        [cell hideProgressView:NO];
         [cell setProgressValue:0.0];
         
         FileDownloader *previewDownloader = [[FileDownloader alloc] init];
@@ -98,7 +106,7 @@
 
 - (void) fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
-    [trackCell hideOrShowProgressView:YES];
+    [trackCell hideProgressView:YES];
 }
 
 - (void) fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
@@ -114,8 +122,8 @@
     [self presentOkAlertWithTitle:@"Download Error" message:error.localizedDescription];
     
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
-    [trackCell hideOrShowDownloadButton:YES];
-    [trackCell hideOrShowProgressView:NO];
+    [trackCell hideDownloadButton:NO];
+    [trackCell hideProgressView:YES];
 }
 
 
@@ -130,11 +138,8 @@
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self performSearch];
     if (searchText.length == 0) {
-        
-        [self.searchedTrackList enumerateObjectsUsingBlock:^(Track *track, NSUInteger idx, BOOL * stop) {
-            [track deletePreviewFile];
-        }];
-        self.searchedTrackList = nil;
+
+        [self.trackManager removeTrackList];
         
         [self.tracksTableView reloadData];
     }
@@ -152,10 +157,10 @@
 
 - (void) performSearch {
     
-    if (self.timer.isValid) {
-        [self.timer invalidate];
+    if (self.typeTime.isValid) {
+        [self.typeTime invalidate];
     }
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(callSearchWebserivce) userInfo:nil repeats:NO];
+    self.typeTime = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(callSearchWebserivce) userInfo:nil repeats:NO];
     
 }
 
@@ -175,8 +180,10 @@
 }
 
 - (TrackCell*) cellForPreViewURL:(NSString *)urlString {
-    Track *track = (Track *)[self.searchedTrackList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ == previewURL",urlString]].firstObject;
-    NSInteger index = [self.searchedTrackList indexOfObject:track];
+    
+    Track *track = [self.trackManager trackFromPreviewUrl:urlString];
+    NSUInteger index = [self.trackManager indexForTrack:track];
+    
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     TrackCell* cell = [self.tracksTableView cellForRowAtIndexPath:indexPath];
     
@@ -187,7 +194,7 @@
 
 - (void) didRecieveTracks:(NSArray *)tracks {
     // Update the searchTrackList with the recieved tracks.
-    self.searchedTrackList = tracks;
+    [self.trackManager addTrackList:tracks];
     
     // Reload the table with the latest track results.
     [self.tracksTableView reloadData];
