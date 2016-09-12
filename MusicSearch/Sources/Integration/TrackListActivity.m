@@ -1,17 +1,17 @@
 //
-//  SongListActivity.m
+//  TrackListActivity.m
 //  This class downloads the list of matching results from the iTunes store. Search URL is https://itunes.apple.com/search?media=music&entity=song&term= 
 //
 //  Created by Pankaj Rathor on 10/09/16.
 //  Copyright © 2016 Sogeti B.V. All rights reserved.
 //
 
-#import "SongListActivity.h"
+#import "TrackListActivity.h"
 #import "Constants.h"
 #import "Track.h"
 #import "AppDelegate.h"
 
-@interface SongListActivity ()
+@interface TrackListActivity ()
 
 // Property to hold the NSURLSession object
 @property (strong, nonatomic) NSURLSession *songListSession;
@@ -24,16 +24,16 @@
 
 @end
 
-@implementation SongListActivity
+@implementation TrackListActivity
 
 + (instancetype) sharedInstance {
     // Create a static instance for this class
-    static SongListActivity *sharedInstance = nil;
+    static TrackListActivity *sharedInstance = nil;
     
     // dispatch_once implmentation to ensure only one instance of this class is created.
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[SongListActivity alloc] init];
+        sharedInstance = [[TrackListActivity alloc] init];
         // setup the NSURLSession
         [sharedInstance initializeSession];
     });

@@ -1,5 +1,5 @@
 //
-//  SongListActivity.h
+//  TrackListActivity.h
 //  This class downloads the list of matching results from the iTunes store. Search URL is https://itunes.apple.com/search?media=music&entity=song&term= 
 //
 //  Created by Pankaj Rathor on 10/09/16.
@@ -10,7 +10,7 @@
 #import "Track.h"
 
 // Protocol for providing the search results to the delegate object.
-@protocol SongListActivityDelegate <NSObject>
+@protocol TrackListActivityDelegate <NSObject>
 
 // Delegate method to provide the search results.
 - (void) didRecieveTracks:(NSArray *) tracks;
@@ -21,10 +21,10 @@
 @end
 
 // This class is responsible for initiating the request to download the search result with the matching search term.
-@interface SongListActivity : NSObject
+@interface TrackListActivity : NSObject
 
 // Delegate instance for sending the delegate messages
-@property (weak, nonatomic) id<SongListActivityDelegate> delegate;
+@property (weak, nonatomic) id<TrackListActivityDelegate> delegate;
 
 // Create a shared instance of the class.
 + (instancetype) sharedInstance;

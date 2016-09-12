@@ -9,12 +9,12 @@
 
 #import "SearchMusicViewController.h"
 #import "TrackCell.h"
-#import "SongListActivity.h"
+#import "TrackListActivity.h"
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "FileDownloader.h"
 
-@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, SongListActivityDelegate,FileDownloaderDelegate>
+@interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, TrackListActivityDelegate,FileDownloaderDelegate>
 
 @property (weak, nonatomic) IBOutlet UISearchBar *songSearchBar;
 @property (weak, nonatomic) IBOutlet UITableView *songsTableView;
@@ -28,7 +28,7 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    [SongListActivity sharedInstance].delegate = self;
+    [TrackListActivity sharedInstance].delegate = self;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
@@ -103,11 +103,13 @@
 }
 
 - (void) fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
-    [trackCell setProgressValue:totalBytesWritten/totalBytesExpectedToWrite];
+    [trackCell setProgressValue:((CGFloat)totalBytesWritten/(CGFloat)totalBytesExpectedToWrite)];
+    
 }
 
-- (void)fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
+- (void) fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
     // TODO: handle download error
 }
 
@@ -139,7 +141,7 @@
     
     //[self.songSearchBar setText:@""];
     [self.songSearchBar resignFirstResponder];
-    [[SongListActivity sharedInstance] cancelSearchOperations];
+    [[TrackListActivity sharedInstance] cancelSearchOperations];
     
 }
 
@@ -164,7 +166,7 @@
     }
     
     NSString *searchString = self.songSearchBar.text;
-    [[SongListActivity sharedInstance] getSongListWithSearchText:searchString];
+    [[TrackListActivity sharedInstance] getSongListWithSearchText:searchString];
     
     // Start the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
