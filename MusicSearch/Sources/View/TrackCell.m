@@ -12,7 +12,7 @@
 @interface TrackCell ()
 
 // IB Outlet for the Song Title Label
-@property (weak, nonatomic) IBOutlet UILabel *songTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *trackTitleLabel;
 
 // IB Outlet for the Artist Label
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
@@ -36,7 +36,7 @@
     
     self.trackDetails = track;
     
-    self.songTitleLabel.text = self.trackDetails.name;
+    self.trackTitleLabel.text = self.trackDetails.name;
     self.artistLabel.text = self.trackDetails.artist;
 
     // Download the artwork image in background and then put it on the artwork image view.

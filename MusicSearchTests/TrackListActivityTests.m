@@ -11,9 +11,9 @@
 
 @interface TrackListApiClient ()
 
-@property (strong, nonatomic) NSURLSession *songListSession;
-@property (strong, nonatomic) NSURLSessionDataTask *songListDataTask;
-@property (strong, nonatomic) NSMutableArray *songList;
+@property (strong, nonatomic) NSURLSession *trackListSession;
+@property (strong, nonatomic) NSURLSessionDataTask *trackListDataTask;
+@property (strong, nonatomic) NSMutableArray *trackList;
 
 @end
 

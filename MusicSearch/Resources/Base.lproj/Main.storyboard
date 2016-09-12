@@ -109,7 +109,7 @@
                                             <outlet property="artworkImageView" destination="Fzi-Km-4KL" id="hpS-kg-zoT"/>
                                             <outlet property="downloadButton" destination="zrD-go-Cps" id="y4H-gH-88R"/>
                                             <outlet property="downloadProgressView" destination="mjA-dB-bde" id="qOX-Mr-iEq"/>
-                                            <outlet property="songTitleLabel" destination="QAN-XN-CaK" id="TYN-Ln-pcP"/>
+                                            <outlet property="trackTitleLabel" destination="QAN-XN-CaK" id="z9c-IC-s8s"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

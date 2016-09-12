@@ -14,13 +14,13 @@
 @interface TrackListApiClient ()
 
 // Property to hold the NSURLSession object
-@property (strong, nonatomic) NSURLSession *songListSession;
+@property (strong, nonatomic) NSURLSession *trackListSession;
 
 // Property to hold the NSURLSessionDataTask to fetch the search results
-@property (strong, nonatomic) NSURLSessionDataTask *songListDataTask;
+@property (strong, nonatomic) NSURLSessionDataTask *trackListDataTask;
 
 // Property to hold the list of songs.
-@property (strong, nonatomic) NSMutableArray *songList;
+@property (strong, nonatomic) NSMutableArray *trackList;
 
 @end
 
@@ -44,16 +44,16 @@
 
 - (void) initializeSession {
     // Create NSURLSession with default Session configuration.
-    self.songListSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    self.trackListSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
-    // Initialize the songList
-    self.songList = [[NSMutableArray alloc] init];
+    // Initialize the trackList
+    self.trackList = [[NSMutableArray alloc] init];
 }
 
 - (void) cancelSearchOperations {
     // Cancel the current running data task.
-    if (self.songListDataTask.state == NSURLSessionTaskStateRunning) {
-        [self.songListDataTask cancel];
+    if (self.trackListDataTask.state == NSURLSessionTaskStateRunning) {
+        [self.trackListDataTask cancel];
     }
 }
 
@@ -78,7 +78,7 @@
         
         __weak typeof(self) weakSelf = self;
         // Create a data task for intiating the request.
-        self.songListDataTask = [self.songListSession dataTaskWithURL:searchUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
+        self.trackListDataTask = [self.trackListSession dataTaskWithURL:searchUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
             
             // Check if there is an error while getting the response.
             if (error == nil) {
@@ -87,16 +87,16 @@
                 if ([(NSHTTPURLResponse *)response statusCode] == 200) {
                     
                     // Parse the response data and save it in
-                    [weakSelf createSongListFromData:data];
+                    [weakSelf createtrackListFromData:data];
                     
                     // Update the track list in the TrackManager
-                    [[TrackManager sharedManager] addTrackList:weakSelf.songList];
+                    [[TrackManager sharedManager] addTrackList:weakSelf.trackList];
                     
                     // Check if the delegate object is valid.
                     if (weakSelf.delegate) {
                         if ([weakSelf.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [weakSelf.delegate didRecieveTracks:weakSelf.songList];
+                                [weakSelf.delegate didRecieveTracks:weakSelf.trackList];
                             });
                         }
                     }
@@ -108,7 +108,7 @@
                 }
             }
             else {
-                NSLog(@"Error retrieving song list: %@", error.localizedDescription);
+                NSLog(@"Error retrieving track list: %@", error.localizedDescription);
                 
                 // If the search was cancelled, do not throw the error to the delegate.
                 if (error.code == NSURLErrorCancelled) {
@@ -129,7 +129,7 @@
             
         }];
         
-        [self.songListDataTask resume];
+        [self.trackListDataTask resume];
     }
     else {
         // No search string specified.
@@ -137,10 +137,10 @@
 }
 
 // Method to parse the response NSData and store the Track object in an array.
-- (void) createSongListFromData:(NSData *) data {
+- (void) createtrackListFromData:(NSData *) data {
     
-    // Empty the song list. We have got new song list.
-    [self.songList removeAllObjects];
+    // Empty the track list. We have got new track list.
+    [self.trackList removeAllObjects];
     
     // Error object for parsing JSON
     NSError *jsonParseError = nil;
@@ -152,14 +152,14 @@
     if (jsonParseError == nil) {
         
         // Get the array of searched songs
-        NSArray *songArray = [responseDictionary objectForKey:@"results"];
+        NSArray *trackArray = [responseDictionary objectForKey:@"results"];
         
-        if (songArray != nil && songArray.count != 0) {
+        if (trackArray != nil && trackArray.count != 0) {
             
             // Iterate through the Array to get Song Details dictionary for each result.
-            [songArray enumerateObjectsUsingBlock:^(NSDictionary *songDetailsDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
-                Track *track = [[Track alloc] initWithDictionary:songDetailsDictionary];
-                [self.songList addObject:track];
+            [trackArray enumerateObjectsUsingBlock:^(NSDictionary *trackDetailsDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+                Track *track = [[Track alloc] initWithDictionary:trackDetailsDictionary];
+                [self.trackList addObject:track];
             }];
         }
         else {

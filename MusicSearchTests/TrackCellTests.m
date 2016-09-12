@@ -12,7 +12,7 @@
 #import "Constants.h"
 
 @interface TrackCell ()
-    @property (weak, nonatomic) UILabel *songTitleLabel;
+    @property (weak, nonatomic) UILabel *trackTitleLabel;
     @property (weak, nonatomic) UILabel *artistLabel;
     @property (weak, nonatomic) UIImageView *artworkImageView;
     @property (weak, nonatomic) UIProgressView *downloadProgressView;
@@ -61,7 +61,7 @@
     [self.sut setupTrackCell:track] ;
     
     //Verify
-    XCTAssertTrue([self.sut.songTitleLabel.text isEqualToString:trackName]);
+    XCTAssertTrue([self.sut.trackTitleLabel.text isEqualToString:trackName]);
     XCTAssertTrue([self.sut.artistLabel.text isEqualToString:artist]);
 }
 
