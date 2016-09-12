@@ -12,18 +12,7 @@
 
 @implementation Track
 
-- (instancetype) initWithName:(NSString *)name artist:(NSString *)artist previewUrl:(NSString *)previewUrl artworkUrl:(NSString *)artworkURL {
-    
-    self = [super init];
-    if (self) {
-        self.name = name;
-        self.artist = artist;
-        self.previewURL = previewUrl;
-        self.artworkURL = artworkURL;
-    }
-    
-    return self;
-}
+
 
 - (instancetype) initWithDictionary:(NSDictionary *)dictionary {
     
