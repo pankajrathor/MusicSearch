@@ -24,6 +24,6 @@
 // Remove the local preview file
 - (BOOL) deletePreviewFile;
 
-- (instancetype) initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype) initWithDictionary:(NSDictionary *) dictionary;
 
 @end

@@ -21,13 +21,13 @@ typedef void (^TrackCellDownloadButtonTappedBlock) (TrackCell *cell);
 - (void) setupTrackCell:(Track *) track;
 
 // Shows/hides the download button
-- (void) hideDownloadButton:(BOOL)shouldHide;
+- (void) hideDownloadButton:(BOOL) shouldHide;
 
 // Shows/hides the progress view
-- (void) hideProgressView:(BOOL)shouldHide;
+- (void) hideProgressView:(BOOL) shouldHide;
 
 // Set the value for the progress view
-- (void) setProgressValue:(float)progressValue;
+- (void) setProgressValue:(float) progressValue;
 
 // Preview URL for the track
 - (NSString *) previewURL;

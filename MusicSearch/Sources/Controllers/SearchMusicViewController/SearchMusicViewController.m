@@ -39,19 +39,19 @@
 }
 
 #pragma mark - Table View Data source methods
-- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView {
     
     // We just want to have 1 section for the table view
     return 1;
 }
 
-- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
     
     NSInteger rows = [[TrackManager sharedManager] trackCount];
     return rows;
 }
 
-- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
     TrackCell *trackCell = (TrackCell *)[tableView dequeueReusableCellWithIdentifier:@"TrackCellIdentifier"];
     [trackCell setupTrackCell:[self.trackManager trackAtIndex:indexPath.row]];
     trackCell.downloadButtonTappedBlock = self.trackCellDownloadButtonTappedBlock;
@@ -61,7 +61,7 @@
 
 #pragma mark - Table View Delegate methods
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void) tableView:(UITableView *) tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath {
     
     Track *track =  [self.trackManager trackAtIndex:indexPath.row];
     NSURL *previewUrl = track.previewLocalURL;
@@ -77,7 +77,7 @@
 
 #pragma mark - Search Bar Delegate Methods
 
-- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+- (void) searchBarSearchButtonClicked:(UISearchBar *) searchBar {
     [self.trackSearchBar resignFirstResponder];
     
     [self.trackSearchBar setShowsCancelButton:NO];
@@ -105,19 +105,19 @@
 
 #pragma mark - FileDownloaderDelegate
 
-- (void) fileDownloader:(FileDownloader *)downloader didFinishDownloadingToURL:(NSURL *)location {
+- (void) fileDownloader:(FileDownloader *) downloader didFinishDownloadingToURL:(NSURL *) location {
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
     [trackCell hideProgressView:YES];
 }
 
-- (void) fileDownloader:(FileDownloader *)downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+- (void) fileDownloader:(FileDownloader *) downloader totalBytesWritten:(int64_t) totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     
     TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
     [trackCell setProgressValue:((CGFloat)totalBytesWritten/(CGFloat)totalBytesExpectedToWrite)];
     
 }
 
-- (void) fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
+- (void) fileDownloader:(FileDownloader *) downloader didCompleteWithError:(NSError *) error {
     
     NSLog(@"File Download error: %@", error.localizedDescription);
     [self presentOkAlertWithTitle:@"Download Error" message:error.localizedDescription];
@@ -129,14 +129,14 @@
 
 
 #pragma mark - UISearchBarDelegate
-- (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+- (BOOL) searchBarShouldBeginEditing:(UISearchBar *) searchBar {
     // When the search bar editing starts, show the cancel button
     [self.trackSearchBar setShowsCancelButton:YES];
     
     return YES;
 }
 
-- (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+- (void) searchBar:(UISearchBar *) searchBar textDidChange:(NSString *) searchText {
     [self performSearch];
     if (searchText.length == 0) {
         // Clear the track list
@@ -147,7 +147,7 @@
     }
 }
 
-- (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+- (void) searchBarCancelButtonClicked:(UISearchBar *) searchBar {
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
     [self.trackSearchBar setShowsCancelButton:NO];
     [self.trackSearchBar resignFirstResponder];
@@ -185,7 +185,7 @@
 }
 
 // Get cell from the preview URL.
-- (TrackCell*) cellForPreViewURL:(NSString *)urlString {
+- (TrackCell*) cellForPreViewURL:(NSString *) urlString {
     
     Track *track = [self.trackManager trackFromPreviewUrl:urlString];
     NSUInteger index = [self.trackManager indexForTrack:track];
@@ -199,7 +199,7 @@
 #pragma mark - TrackListApiClientDelegate methods
 
 // Delegate method for getting the track list
-- (void) didRecieveTracks:(NSArray *)tracks {
+- (void) didRecieveTracks:(NSArray *) tracks {
     
     // Reload the table with the latest track results.
     [self.tracksTableView reloadData];
@@ -212,7 +212,7 @@
 }
 
 // Delegate method for error while getting the track list
-- (void) didRecieveError:(NSError *)error {
+- (void) didRecieveError:(NSError *) error {
     NSLog(@"Error getting track list: %@", error.description);
     
     [self.tracksTableView reloadData];

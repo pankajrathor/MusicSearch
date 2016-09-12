@@ -34,20 +34,20 @@
     return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
 }
 
-- (NSString*) localPathForURL:(NSString *)fileURLString {
+- (NSString*) localPathForURL:(NSString *) fileURLString {
     NSURL *fileURL = [NSURL URLWithString:fileURLString];
     NSString *fileName = fileURL.lastPathComponent;
     // Append the remote file name with documents directory to get the local file path
     return [NSString stringWithFormat:@"%@/%@", self.documentsDirectoryPath, fileName];
 }
 
-- (BOOL) removeItemAtPath:(NSString *)path {
+- (BOOL) removeItemAtPath:(NSString *) path {
     NSError *error = nil;
     BOOL success = [self.fileManager removeItemAtPath:path error:&error];
     return (success && !error);
 }
 
-- (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString {
+- (BOOL) shouldDownloadFileForURL:(NSString *) fileURLString {
     return ![[NSFileManager defaultManager] fileExistsAtPath:[self localPathForURL:fileURLString]];
 }
 

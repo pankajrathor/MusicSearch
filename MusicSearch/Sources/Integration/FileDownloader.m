@@ -42,7 +42,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
 }
 
 #pragma mark - NSURLSessionDownloadDelegate methods
-- (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+- (void) URLSession:(NSURLSession *) session downloadTask:(NSURLSessionDownloadTask *) downloadTask didFinishDownloadingToURL:(NSURL *) location {
     
     NSURL *originalUrl = downloadTask.originalRequest.URL;
     
@@ -84,7 +84,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     }
 }
 
-- (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+- (void) URLSession:(NSURLSession *) session downloadTask:(NSURLSessionDownloadTask *) downloadTask didWriteData:(int64_t) bytesWritten totalBytesWritten:(int64_t) totalBytesWritten totalBytesExpectedToWrite:(int64_t) totalBytesExpectedToWrite {
     
     // Check if delegate is valid
     if (self.delegate) {
@@ -99,7 +99,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     
 }
 
-- (void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+- (void) URLSession:(NSURLSession *) session task:(NSURLSessionTask *) task didCompleteWithError:(NSError *) error {
     
     if (error) {
         // Check if delegate is valid

@@ -38,15 +38,15 @@
 }
 
 
-- (void) fileDownloader:(FileDownloader *) downloader didFinishDownloadingToURL:(NSURL *)location {
+- (void) fileDownloader:(FileDownloader *) downloader didFinishDownloadingToURL:(NSURL *) location {
     [self.expectation fulfill];
 }
 
-- (void) fileDownloader:(FileDownloader *) downloader totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+- (void) fileDownloader:(FileDownloader *) downloader totalBytesWritten:(int64_t) totalBytesWritten totalBytesExpectedToWrite:(int64_t) totalBytesExpectedToWrite {
     //NOP
 }
 
-- (void) fileDownloader:(FileDownloader *) downloader didCompleteWithError:(NSError *)error {
+- (void) fileDownloader:(FileDownloader *) downloader didCompleteWithError:(NSError *) error {
     //NOP
 }
 

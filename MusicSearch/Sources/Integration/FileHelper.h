@@ -14,12 +14,12 @@
 + (instancetype) sharedHelper;
 
 // Tells whether the file should be downloaded or not
-- (BOOL) shouldDownloadFileForURL:(NSString *)fileURLString;
+- (BOOL) shouldDownloadFileForURL:(NSString *) fileURLString;
 
 // Get the local path for the file
-- (NSString*) localPathForURL:(NSString *)fileURLString;
+- (NSString*) localPathForURL:(NSString *) fileURLString;
 
 // Removes the file at the specified path
-- (BOOL) removeItemAtPath:(NSString *)path;
+- (BOOL) removeItemAtPath:(NSString *) path;
 
 @end
