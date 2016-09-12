@@ -188,7 +188,7 @@
     return cell;
 }
 
-#pragma mark - SongListActivityDelegate
+#pragma mark - TrackListActivityDelegate
 
 - (void) didRecieveTracks:(NSArray *)tracks {
     // Update the searchTrackList with the recieved tracks.
