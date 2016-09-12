@@ -16,8 +16,8 @@
 
 @interface SearchMusicViewController () < UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, TrackListActivityDelegate,FileDownloaderDelegate>
 
-@property (weak, nonatomic) IBOutlet UISearchBar *songSearchBar;
-@property (weak, nonatomic) IBOutlet UITableView *songsTableView;
+@property (weak, nonatomic) IBOutlet UISearchBar *trackSearchBar;
+@property (weak, nonatomic) IBOutlet UITableView *tracksTableView;
 @property (strong, nonatomic) NSArray *searchedTrackList;
 @property (nonatomic,strong) NSTimer* timer;
 @property (nonatomic) BOOL searchButtonTapped;
@@ -69,9 +69,9 @@
 #pragma mark - Search Bar Delegate Methods
 
 - (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [self.songSearchBar resignFirstResponder];
+    [self.trackSearchBar resignFirstResponder];
     
-    [self.songSearchBar setShowsCancelButton:NO];
+    [self.trackSearchBar setShowsCancelButton:NO];
    // [self.songSearchBar setText:@""];
     self.searchButtonTapped = YES;
     [self callSearchWebserivce];
@@ -117,7 +117,7 @@
 #pragma mark - UISearchBarDelegate
 - (BOOL) searchBarShouldBeginEditing:(UISearchBar *)searchBar {
     // When the search bar editing starts, show the cancel button
-    [self.songSearchBar setShowsCancelButton:YES];
+    [self.trackSearchBar setShowsCancelButton:YES];
     
     return YES;
 }
@@ -131,16 +131,16 @@
         }];
         self.searchedTrackList = nil;
         
-        [self.songsTableView reloadData];
+        [self.tracksTableView reloadData];
     }
 }
 
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
-    [self.songSearchBar setShowsCancelButton:NO];
+    [self.trackSearchBar setShowsCancelButton:NO];
     
     //[self.songSearchBar setText:@""];
-    [self.songSearchBar resignFirstResponder];
+    [self.trackSearchBar resignFirstResponder];
     [[TrackListActivity sharedInstance] cancelSearchOperations];
     
 }
@@ -157,15 +157,15 @@
 }
 
 - (void) callSearchWebserivce {
-    NSLog(@"Inside %s text = %@",__func__,self.songSearchBar.text);
+    NSLog(@"Inside %s text = %@",__func__,self.trackSearchBar.text);
     
     //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
     //If user has clicked on seach button then we will not check the length of the search string.
-    if (self.songSearchBar.text.length < 2 && !self.searchButtonTapped) {
+    if (self.trackSearchBar.text.length < 2 && !self.searchButtonTapped) {
         return;
     }
     
-    NSString *searchString = self.songSearchBar.text;
+    NSString *searchString = self.trackSearchBar.text;
     [[TrackListActivity sharedInstance] getSongListWithSearchText:searchString];
     
     // Start the network activity indicator to visible on the status bar.
@@ -177,7 +177,7 @@
     Track *track = (Track *)[self.searchedTrackList filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%@ == previewURL",urlString]].firstObject;
     NSInteger index = [self.searchedTrackList indexOfObject:track];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    TrackCell* cell = [self.songsTableView cellForRowAtIndexPath:indexPath];
+    TrackCell* cell = [self.tracksTableView cellForRowAtIndexPath:indexPath];
     
     return cell;
 }
@@ -189,7 +189,7 @@
     self.searchedTrackList = tracks;
     
     // Reload the table with the latest track results.
-    [self.songsTableView reloadData];
+    [self.tracksTableView reloadData];
     
     // Stop the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -201,7 +201,7 @@
 - (void) didRecieveError:(NSError *)error {
     NSLog(@"Error getting song list: %@", error.description);
     
-    [self.songsTableView reloadData];
+    [self.tracksTableView reloadData];
     
     // Stop the network activity indicator to visible on the status bar.
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
