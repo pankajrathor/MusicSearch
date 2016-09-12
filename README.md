@@ -21,6 +21,7 @@ Functional Improvement
 1. Store recent searches.
 2. Making search as favorite.
 3. Better control over the audio playback.
+4. Caching of downloaded songs.
 
 Areas of improvement
 =========================
