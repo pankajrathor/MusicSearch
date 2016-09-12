@@ -41,6 +41,7 @@ NSString *backgroundSessionConfigurationIdentifier = @"fileDownloadSessionConfig
     [self.fileDownloadTask resume];
 }
 
+#pragma mark - NSURLSessionDownloadDelegate methods
 - (void) URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     
     NSURL *originalUrl = downloadTask.originalRequest.URL;
