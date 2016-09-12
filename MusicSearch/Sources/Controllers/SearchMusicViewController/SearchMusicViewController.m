@@ -110,7 +110,13 @@
 }
 
 - (void) fileDownloader:(FileDownloader *)downloader didCompleteWithError:(NSError *)error {
-    // TODO: handle download error
+    
+    NSLog(@"File Download error: %@", error.localizedDescription);
+    [self presentOkAlertWithTitle:@"Download Error" message:error.localizedDescription];
+    
+    TrackCell *trackCell = [self cellForPreViewURL:downloader.fileURLString];
+    [trackCell hideOrShowDownloadButton:YES];
+    [trackCell hideOrShowProgressView:NO];
 }
 
 
@@ -209,15 +215,16 @@
     //Reset the state of this variable
     self.searchButtonTapped = NO;
     
-    [self presentAlertForError:error];
+    // Display the alert for error
+    [self presentOkAlertWithTitle:@"Search Error" message:error.localizedDescription];
 }
 
-// Presents a UIAlertViewController with OK action and error description
-- (void) presentAlertForError:(NSError *) error {
+// Presents a UIAlertViewController with OK action
+- (void) presentOkAlertWithTitle:(NSString *) title message:(NSString *) message {
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {}];
     
-    UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertViewController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     [alertViewController addAction:okAction];
     

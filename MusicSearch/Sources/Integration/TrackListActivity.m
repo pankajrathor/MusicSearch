@@ -75,6 +75,7 @@
         // Create an NSURL out of the search URL string
         NSURL *searchUrl = [NSURL URLWithString:searchUrlString];
         
+        __weak typeof(self) weakSelf = self;
         // Create a data task for intiating the request.
         self.songListDataTask = [self.songListSession dataTaskWithURL:searchUrl completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
             
@@ -85,13 +86,13 @@
                 if ([(NSHTTPURLResponse *)response statusCode] == 200) {
                     
                     // Parse the response data and save it in
-                    [self createSongListFromData:data];
+                    [weakSelf createSongListFromData:data];
                     
                     // Check if the delegate object is valid.
-                    if (self.delegate) {
-                        if ([self.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
+                    if (weakSelf.delegate) {
+                        if ([weakSelf.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
                             
-                            __weak typeof(self) weakSelf = self;
+                            
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [weakSelf.delegate didRecieveTracks:weakSelf.songList];
                             });
@@ -106,11 +107,10 @@
             }
             else {
                 NSLog(@"Error retrieving song list: %@", error.localizedDescription);
-                
-                if (self.delegate) {
-                    if ([self.delegate respondsToSelector:@selector(didRecieveError:)]) {
+            
+                if (weakSelf.delegate) {
+                    if ([weakSelf.delegate respondsToSelector:@selector(didRecieveError:)]) {
                         
-                        __weak typeof(self) weakSelf = self;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [weakSelf.delegate didRecieveError:error];
                         });
