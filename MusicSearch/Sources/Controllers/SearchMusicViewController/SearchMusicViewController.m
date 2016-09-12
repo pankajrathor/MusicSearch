@@ -72,7 +72,6 @@
     [self.trackSearchBar resignFirstResponder];
     
     [self.trackSearchBar setShowsCancelButton:NO];
-   // [self.songSearchBar setText:@""];
     self.searchButtonTapped = YES;
     [self callSearchWebserivce];
 }
@@ -144,8 +143,6 @@
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     // When the search bar cancel button is clicked, clear the search text and hide the keyboard.
     [self.trackSearchBar setShowsCancelButton:NO];
-    
-    //[self.songSearchBar setText:@""];
     [self.trackSearchBar resignFirstResponder];
     [[TrackListActivity sharedInstance] cancelSearchOperations];
     
@@ -163,8 +160,6 @@
 }
 
 - (void) callSearchWebserivce {
-    NSLog(@"Inside %s text = %@",__func__,self.trackSearchBar.text);
-    
     //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
     //If user has clicked on seach button then we will not check the length of the search string.
     if (self.trackSearchBar.text.length < 2 && !self.searchButtonTapped) {
