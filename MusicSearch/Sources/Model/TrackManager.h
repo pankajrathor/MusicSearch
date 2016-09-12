@@ -30,6 +30,6 @@
 - (Track *) trackFromPreviewUrl:(NSString *) previewUrl;
 
 // Remove all tracks from the Track Manager
-- (void) removeTrackList;
+- (void) clearTrackList;
 
 @end

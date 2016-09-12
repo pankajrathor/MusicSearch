@@ -35,7 +35,7 @@
 - (void) addTrackList:(NSArray *) trackList {
     
     // Before
-    [self removeTrackList];
+    [self clearTrackList];
     
     self.trackList = trackList;
     
@@ -68,7 +68,7 @@
 }
 
 // Remove all tracks from the Track Manager
-- (void) removeTrackList {
+- (void) clearTrackList {
     
     // Enumerate through each of the track and delete the preview files.
     [self.trackList enumerateObjectsUsingBlock:^(Track *track, NSUInteger idx, BOOL * stop) {
