@@ -13,7 +13,7 @@
 @protocol TrackListApiClientDelegate <NSObject>
 
 // Delegate method to provide the search results.
-- (void) didRecieveTracks:(NSArray *) tracks;
+- (void) didRecieveTracksComplete;
 
 // Delegate method in case there is an error retrieving the response.
 - (void) didRecieveError:(NSError *) error;

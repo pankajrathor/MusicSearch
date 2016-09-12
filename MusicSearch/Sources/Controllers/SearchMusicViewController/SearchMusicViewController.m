@@ -199,7 +199,7 @@
 #pragma mark - TrackListApiClientDelegate methods
 
 // Delegate method for getting the track list
-- (void) didRecieveTracks:(NSArray *) tracks {
+- (void) didRecieveTracksComplete {
     
     // Reload the table with the latest track results.
     [self.tracksTableView reloadData];

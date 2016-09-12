@@ -94,9 +94,9 @@
                     
                     // Check if the delegate object is valid.
                     if (weakSelf.delegate) {
-                        if ([weakSelf.delegate respondsToSelector:@selector(didRecieveTracks:)]) {
+                        if ([weakSelf.delegate respondsToSelector:@selector(didRecieveTracksComplete)]) {
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                [weakSelf.delegate didRecieveTracks:weakSelf.trackList];
+                                [weakSelf.delegate didRecieveTracksComplete];
                             });
                         }
                     }
@@ -104,7 +104,6 @@
                 else {
                     // Status code is not correct and hence we cannot proceed further.
                     NSLog(@"HTTP Status code is not OK: %d", (int)[(NSHTTPURLResponse *)response statusCode]);
-                    // TODO: Add Alert
                 }
             }
             else {
@@ -126,13 +125,9 @@
                     }
                 }
             }
-            
         }];
         
         [self.trackListDataTask resume];
-    }
-    else {
-        // No search string specified.
     }
 }
 
@@ -152,7 +147,7 @@
     if (jsonParseError == nil) {
         
         // Get the array of searched tracks
-        NSArray *trackArray = [responseDictionary objectForKey:@"results"];
+        NSArray *trackArray = responseDictionary[@"results"];
         
         if (trackArray != nil && trackArray.count != 0) {
             
