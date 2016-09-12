@@ -39,6 +39,7 @@
     self.songTitleLabel.text = self.trackDetails.name;
     self.artistLabel.text = self.trackDetails.artist;
 
+    // Download the artwork image in background and then put it on the artwork image view.
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         

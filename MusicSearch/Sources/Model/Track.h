@@ -15,8 +15,13 @@
 @property (strong, nonatomic) NSString *previewURL;
 @property (strong, nonatomic) NSString *artworkURL;
 
+// Check if the file should be downloaded or not
 - (BOOL) shouldDownloadFile;
+
+// Get the local path for the preview file
 - (NSURL*) previewLocalURL;
+
+// Remove the local preview file
 - (BOOL) deletePreviewFile;
 
 - (instancetype) initWithDictionary:(NSDictionary *)dictionary;

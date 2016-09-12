@@ -66,6 +66,7 @@
     Track *track =  [self.trackManager trackAtIndex:indexPath.row];
     NSURL *previewUrl = track.previewLocalURL;
     
+    // Play the preview file using the AVPlayer
     if (previewUrl) {
         AVPlayer *player = [AVPlayer playerWithURL:previewUrl];
         AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
@@ -138,9 +139,10 @@
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self performSearch];
     if (searchText.length == 0) {
-
+        // Clear the track list
         [self.trackManager clearTrackList];
         
+        // reload the table
         [self.tracksTableView reloadData];
     }
 }
@@ -160,10 +162,13 @@
     if (self.typeTime.isValid) {
         [self.typeTime invalidate];
     }
+    
+    // setup a timer for initiating a search after 0.8 secs from typing end event
     self.typeTime = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(callSearchWebserivce) userInfo:nil repeats:NO];
     
 }
 
+// Invoke web service call to get the track list
 - (void) callSearchWebserivce {
     //If we are searching as user is typing then we will proceed only if user has entered at least 2 characters.
     //If user has clicked on seach button then we will not check the length of the search string.
@@ -179,6 +184,7 @@
     
 }
 
+// Get cell from the preview URL.
 - (TrackCell*) cellForPreViewURL:(NSString *)urlString {
     
     Track *track = [self.trackManager trackFromPreviewUrl:urlString];
@@ -192,6 +198,7 @@
 
 #pragma mark - TrackListActivityDelegate
 
+// Delegate method for getting the track list
 - (void) didRecieveTracks:(NSArray *)tracks {
     // Update the searchTrackList with the recieved tracks.
     [self.trackManager addTrackList:tracks];
@@ -206,6 +213,7 @@
     self.searchButtonTapped = NO;
 }
 
+// Delegate method for error while getting the track list
 - (void) didRecieveError:(NSError *)error {
     NSLog(@"Error getting song list: %@", error.description);
     
