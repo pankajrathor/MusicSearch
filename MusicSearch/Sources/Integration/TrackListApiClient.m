@@ -9,7 +9,7 @@
 #import "TrackListApiClient.h"
 #import "Constants.h"
 #import "Track.h"
-#import "AppDelegate.h"
+#import "TrackManager.h"
 
 @interface TrackListApiClient ()
 
@@ -88,6 +88,9 @@
                     
                     // Parse the response data and save it in
                     [weakSelf createSongListFromData:data];
+                    
+                    // Update the track list in the TrackManager
+                    [[TrackManager sharedManager] addTrackList:weakSelf.songList];
                     
                     // Check if the delegate object is valid.
                     if (weakSelf.delegate) {

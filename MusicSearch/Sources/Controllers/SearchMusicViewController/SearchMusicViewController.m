@@ -200,8 +200,6 @@
 
 // Delegate method for getting the track list
 - (void) didRecieveTracks:(NSArray *)tracks {
-    // Update the searchTrackList with the recieved tracks.
-    [self.trackManager addTrackList:tracks];
     
     // Reload the table with the latest track results.
     [self.tracksTableView reloadData];
