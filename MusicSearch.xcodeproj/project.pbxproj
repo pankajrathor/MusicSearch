@@ -284,7 +284,7 @@
 				TargetAttributes = {
 					2B2593571D83EC4800768E86 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = KS76T8PFJA;
+						DevelopmentTeam = 8355E3N9WY;
 						ProvisioningStyle = Automatic;
 					};
 					A768B9F61D8582A700C828A9 = {
@@ -485,7 +485,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Manish Malani (KS76T8PFJA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = KS76T8PFJA;
+				DEVELOPMENT_TEAM = 8355E3N9WY;
 				INFOPLIST_FILE = MusicSearch/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -502,7 +502,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Manish Malani (KS76T8PFJA)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = KS76T8PFJA;
+				DEVELOPMENT_TEAM = 8355E3N9WY;
 				INFOPLIST_FILE = MusicSearch/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
